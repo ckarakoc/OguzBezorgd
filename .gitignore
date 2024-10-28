@@ -41,7 +41,7 @@ appsettings.json
 
 # Sqlite
 *.db-shm
-*.db-wal### Example user template template
+*.db-wal
 
 # IntelliJ project files
 out

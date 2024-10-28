@@ -1,9 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.Text.Json.Serialization;
 
 namespace Server.Entities;
 
 public class Store
 {
+    // todo: PhoneNumberConfirmed?
     // [Fields]
     public int Id { get; set; }
     public required string StoreName { get; set; }
@@ -18,11 +19,11 @@ public class Store
 
     // [Parent] -> Has -> Store
     public int PartnerId { get; set; }
-    public required User Partner { get; set; }
+
+    public User Partner { get; set; } = null!;
 
     // Store -> Has -> [Child]
     public required StoreAddress Address { get; set; }
     public List<StoreProduct> Products { get; set; } = [];
     public List<Order> Orders { get; set; } = [];
-    
 }

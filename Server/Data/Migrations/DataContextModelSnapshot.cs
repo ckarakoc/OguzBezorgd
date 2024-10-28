@@ -516,7 +516,7 @@ namespace Server.Data.Migrations
             modelBuilder.Entity("Server.Entities.Store", b =>
                 {
                     b.HasOne("Server.Entities.User", "Partner")
-                        .WithMany("Store")
+                        .WithMany("Stores")
                         .HasForeignKey("PartnerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -578,7 +578,7 @@ namespace Server.Data.Migrations
 
                     b.Navigation("Orders");
 
-                    b.Navigation("Store");
+                    b.Navigation("Stores");
                 });
 #pragma warning restore 612, 618
         }

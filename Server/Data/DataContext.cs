@@ -16,10 +16,18 @@ public class DataContext(DbContextOptions options)
         IdentityRoleClaim<int>,
         IdentityUserToken<int>>(options)
 {
+    public DbSet<Order> Orders { get; set; }
+    public DbSet<OrderItem> OrderItems { get; set; }
+    public DbSet<Store> Stores { get; set; }
+    public DbSet<StoreAddress> StoreAddresses { get; set; }
+    public DbSet<StoreProduct> StoreProducts { get; set; }
+    public DbSet<UserAddress> UserAddresses { get; set; }
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
-        
+
+        // EF.IdentityCore
         builder.Entity<User>()
             .ToTable("Users");
         builder.Entity<IdentityRole<int>>()
@@ -34,6 +42,8 @@ public class DataContext(DbContextOptions options)
             .ToTable("UserLogins");
         builder.Entity<IdentityUserToken<int>>()
             .ToTable("UserTokens");
+
+        // Custom Additions
         builder.Entity<Order>()
             .ToTable("Orders");
         builder.Entity<OrderItem>()

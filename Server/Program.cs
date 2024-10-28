@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Http.Json;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Server.Data;
@@ -8,6 +10,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 var services = builder.Services;
 var config = builder.Configuration;
+
+// Configurations
+services.Configure<RouteOptions>(options => options.LowercaseUrls = true);
 
 services.AddApplicationService(config);
 services.AddIdentityService(config);
@@ -23,7 +28,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+
 // Middleware
+
+app.MapControllers();
 
 // Insert Roles
 using var scope = app.Services.CreateScope();
@@ -68,8 +76,8 @@ if (_user == null && userPWD != null)
 
 if (app.Environment.IsDevelopment())
 {
-    Seed.SeedData(userManager, roleManager, config);
-    appLifetime.ApplicationStopping.Register(() => { Seed.CleanupData(userManager, roleManager, config); });
+    Seed.SeedData(userManager, roleManager, context, config);
+    appLifetime.ApplicationStopping.Register(() => { Seed.CleanupData(context); });
 }
 
 app.MapGet("/", () => "Hello World!");

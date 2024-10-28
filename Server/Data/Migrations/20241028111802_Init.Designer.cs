@@ -11,7 +11,7 @@ using Server.Data;
 namespace Server.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20241026145619_Init")]
+    [Migration("20241028111802_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -519,7 +519,7 @@ namespace Server.Data.Migrations
             modelBuilder.Entity("Server.Entities.Store", b =>
                 {
                     b.HasOne("Server.Entities.User", "Partner")
-                        .WithMany("Store")
+                        .WithMany("Stores")
                         .HasForeignKey("PartnerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -581,7 +581,7 @@ namespace Server.Data.Migrations
 
                     b.Navigation("Orders");
 
-                    b.Navigation("Store");
+                    b.Navigation("Stores");
                 });
 #pragma warning restore 612, 618
         }

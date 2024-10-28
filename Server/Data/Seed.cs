@@ -24,14 +24,6 @@ public static class Seed
         .RuleFor(s => s.Website, f => f.Internet.Url())
         .RuleFor(s => s.OpeningTime, new TimeOnly(8, 0, 0))
         .RuleFor(s => s.ClosingTime, new TimeOnly(20, 0, 0))
-        .RuleFor(s => s.Address, new Faker<StoreAddress>()
-            .RuleFor(a => a.StreetAddress, f => f.Address.StreetAddress())
-            .RuleFor(a => a.City, f => f.Address.City())
-            .RuleFor(a => a.State, f => f.Address.State())
-            .RuleFor(a => a.Country, f => f.Address.Country())
-            .RuleFor(a => a.ZipCode, f => f.Address.ZipCode())
-            .Generate()
-        )
         .Generate(10);
 
     private static User _partner = new Faker<User>()
@@ -82,7 +74,15 @@ public static class Seed
         _partner.Stores.AddRange(_stores);
         foreach (var store in _stores)
         {
-            Console.WriteLine(store.Address);
+            var address = new Faker<StoreAddress>()
+                .RuleFor(a => a.StoreId, s => store.Id)
+                .RuleFor(a => a.StreetAddress, f => f.Address.StreetAddress())
+                .RuleFor(a => a.City, f => f.Address.City())
+                .RuleFor(a => a.State, f => f.Address.State())
+                .RuleFor(a => a.Country, f => f.Address.Country())
+                .RuleFor(a => a.ZipCode, f => f.Address.ZipCode())
+                .Generate();
+            store.Address = address;
         }
 
         await userManager.CreateAsync(_partner, config["SuperUserPassword"] ?? "Pa$$w0rd");

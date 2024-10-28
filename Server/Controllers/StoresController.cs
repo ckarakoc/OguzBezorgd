@@ -7,7 +7,7 @@ namespace Server.Controllers;
 public class StoresController(
     IUnitOfWork unitOfWork) : BaseApiController
 {
-    [HttpGet]
+    [HttpGet] // api/stores
     public async Task<ActionResult<IEnumerable<Store>>> GetStores()
     {
         var stores = await unitOfWork.StoreRepository.GetStoresAsync();

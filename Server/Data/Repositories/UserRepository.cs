@@ -1,20 +1,23 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Microsoft.EntityFrameworkCore;
+using Server.DTOs;
 using Server.Entities;
 using Server.Interfaces;
 
 namespace Server.Data.Repositories;
 
-public class UserRepository(DataContext context) : IUserRepository
+public class UserRepository(DataContext context, IMapper mapper) : IUserRepository
 {
     public void AddUser(User user)
     {
         context.Users.Add(user);
     }
 
-    public async Task<IEnumerable<User>> GetUsersAsync()
+    public async Task<IEnumerable<UserDto>> GetUsersAsync()
     {
         var users = await context.Users
-            .Include(u => u.Stores)
+            .ProjectTo<UserDto>(mapper.ConfigurationProvider)
             .ToListAsync();
         return users;
     }
@@ -27,7 +30,7 @@ public class UserRepository(DataContext context) : IUserRepository
 
     public async Task<User?> GetUserByUserNameAsync(string userName)
     {
-        var user = await context.Users.SingleOrDefaultAsync(u => u.NormalizedUserName == userName.ToUpper());
+        var user = await context.Users.Include(u => u.Stores).SingleOrDefaultAsync(u => u.NormalizedUserName == userName.ToUpper());
         return user;
     }
 

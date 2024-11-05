@@ -462,3 +462,34 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+## Angular ##
+# compiled output
+dist/
+tmp/
+app/**/*.js
+app/**/*.js.map
+
+# dependencies
+bower_components/
+
+# IDEs and editors
+.idea/
+.vscode/
+
+# misc
+connect.lock/
+coverage/
+libpeerconnection.log/
+npm-debug.log
+testem.log
+typings/
+.angular/
+
+# e2e
+e2e/*.js
+e2e/*.map
+
+# System Files
+.DS_Store/
+

@@ -1,5 +1,3 @@
-using System.Text.Json.Serialization;
-using Microsoft.AspNetCore.Http.Json;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Server.Data;
@@ -76,10 +74,14 @@ if (_user == null && userPWD != null)
 
 if (app.Environment.IsDevelopment())
 {
-    Seed.SeedData(userManager, roleManager, context, config);
-    appLifetime.ApplicationStopping.Register(() => { Seed.CleanupData(context); });
+    // Seed.SeedData(userManager, roleManager, context, config);
+    // appLifetime.ApplicationStopping.Register(() => { Seed.CleanupData(context); });
 }
 
 app.MapGet("/", () => "Hello World!");
 
 app.Run();
+
+public partial class Program
+{
+}

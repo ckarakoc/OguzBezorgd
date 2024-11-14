@@ -1,15 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Server.DTOs;
-using Server.Interfaces;
+using Server.Core.DTOs;
+using Server.Core.Interfaces;
 
-namespace Server.Controllers;
+namespace Server.Core.Controllers;
 
 public class AuthController(IUnitOfWork unitOfWork) : BaseApiController
 {
     [HttpPost("login")]
     public async Task<IActionResult> Login(LoginDto loginDto)
     {
-        var username = loginDto.Username;
+        var userName = loginDto.UserName;
         var password = loginDto.Password;
         //todo
         // response?
@@ -28,6 +28,11 @@ public class AuthController(IUnitOfWork unitOfWork) : BaseApiController
         return Ok();
     }
     
+    /// <summary>
+    /// Creates a new user
+    /// </summary>
+    /// <param name="registerDto"></param>
+    /// <returns></returns>
     [HttpPost("register")]
     public async Task<IActionResult> Register(RegisterDto registerDto)
     {

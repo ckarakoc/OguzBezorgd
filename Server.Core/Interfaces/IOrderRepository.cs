@@ -1,4 +1,4 @@
-﻿namespace Server.Interfaces;
+﻿namespace Server.Core.Interfaces;
 
 public interface IOrderRepository
 {

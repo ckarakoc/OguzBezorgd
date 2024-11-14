@@ -1,4 +1,4 @@
-﻿namespace Server.Entities;
+﻿namespace Server.Core.Entities;
 
 public class OrderItem
 {

@@ -1,8 +1,8 @@
 ﻿using Bogus;
 using Microsoft.AspNetCore.Identity;
-using Server.Entities;
+using Server.Core.Entities;
 
-namespace Server.Data;
+namespace Server.Core.Data;
 
 public static class Seed
 {

@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Server.Entities;
+using Server.Core.Entities;
 
-namespace Server.Data;
+namespace Server.Core.Data;
 
 public class DataContext(DbContextOptions options)
     : IdentityDbContext<

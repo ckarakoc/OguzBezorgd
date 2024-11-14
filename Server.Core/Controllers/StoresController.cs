@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Server.Entities;
-using Server.Interfaces;
+using Server.Core.Entities;
+using Server.Core.Interfaces;
 
-namespace Server.Controllers;
+namespace Server.Core.Controllers;
 
 public class StoresController(
     IUnitOfWork unitOfWork) : BaseApiController

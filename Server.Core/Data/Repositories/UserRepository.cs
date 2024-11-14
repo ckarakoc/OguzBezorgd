@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
-using Server.DTOs;
-using Server.Entities;
-using Server.Interfaces;
+using Server.Core.DTOs;
+using Server.Core.Entities;
+using Server.Core.Interfaces;
 
-namespace Server.Data.Repositories;
+namespace Server.Core.Data.Repositories;
 
 public class UserRepository(DataContext context, IMapper mapper) : IUserRepository
 {

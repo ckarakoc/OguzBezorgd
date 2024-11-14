@@ -1,10 +1,10 @@
 ﻿using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
-using Server.Data;
-using Server.Data.Repositories;
-using Server.Interfaces;
+using Server.Core.Data;
+using Server.Core.Data.Repositories;
+using Server.Core.Interfaces;
 
-namespace Server.Extensions;
+namespace Server.Core.Extensions;
 
 public static class ApplicationServiceExtension
 {

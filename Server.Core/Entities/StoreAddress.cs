@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
-namespace Server.Entities;
+namespace Server.Core.Entities;
 
 public class StoreAddress
 {

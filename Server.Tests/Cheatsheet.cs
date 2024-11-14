@@ -1,4 +1,4 @@
-﻿namespace Server.Tests;
+﻿namespace Server.Core.Tests;
 
 using System.Reflection;
 using Xunit.Sdk;

@@ -1,6 +1,6 @@
-﻿using Server.Interfaces;
+﻿using Server.Core.Interfaces;
 
-namespace Server.Data;
+namespace Server.Core.Data;
 
 public class UnitOfWork(
     DataContext context,

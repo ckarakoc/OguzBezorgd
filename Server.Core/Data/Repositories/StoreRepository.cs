@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Server.Entities;
-using Server.Interfaces;
+using Server.Core.Entities;
+using Server.Core.Interfaces;
 
-namespace Server.Data.Repositories;
+namespace Server.Core.Data.Repositories;
 
 public class StoreRepository(DataContext context) : IStoreRepository
 {

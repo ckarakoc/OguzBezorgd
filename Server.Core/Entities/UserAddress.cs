@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Server.Entities;
+namespace Server.Core.Entities;
 
 public class UserAddress
 {

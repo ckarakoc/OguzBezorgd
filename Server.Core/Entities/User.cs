@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace Server.Entities;
+namespace Server.Core.Entities;
 
 /// <summary>
 /// A User, based on AspNetCore IdentityUser&lt;int\&gt;.

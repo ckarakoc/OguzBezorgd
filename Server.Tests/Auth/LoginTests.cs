@@ -2,11 +2,11 @@
 using System.Net.Http.Json;
 using System.Reflection;
 using FluentAssertions;
-using Server.Tests.Factories;
+using Server.Core.Tests.Factories;
 using Xunit.Abstractions;
 using Xunit.Sdk;
 
-namespace Server.Tests.Auth;
+namespace Server.Core.Tests.Auth;
 
 public class LoginTests : IClassFixture<CustomWebApplicationFactory<Program>>
 {
@@ -35,25 +35,28 @@ public class LoginTests : IClassFixture<CustomWebApplicationFactory<Program>>
 
     [Theory]
     [LoginFailsData]
-    public async Task Login_Fails(string username, string password, string errorMessage)
+    public async Task Login_Fails(string userName, string password, string errorMessage)
     {
-        var content = CreateLoginContent(username, password);
+        var content = CreateLoginContent(userName, password);
         _output.WriteLine(content.ReadAsStringAsync().Result);
         var httpResponse = await SendLoginRequest(content);
         httpResponse.StatusCode.Should().Be(HttpStatusCode.BadRequest, errorMessage);
     }
 
-    private JsonContent CreateLoginContent(string username, string password)
-        => JsonContent.Create(new {username, password});
+    private JsonContent CreateLoginContent(string userName, string password)
+        => JsonContent.Create(new {userName, password});
 
     private async Task<HttpResponseMessage> SendLoginRequest(JsonContent content)
         => await _client.PostAsync("/api/auth/login", content);
 
-    class LoginFailsData : DataAttribute
+    private class LoginFailsData : DataAttribute
     {
         public override IEnumerable<object[]> GetData(MethodInfo testMethod)
         {
+            // Username Tests
             yield return ["", Password, "Username is required"];
+
+            // Password Tests
             yield return [Username, "", "Password is required"];
             yield return [Username, Password[..7], "Password must be at least 8 characters"];
             yield return [Username, Password + "1", "Wrong password"];

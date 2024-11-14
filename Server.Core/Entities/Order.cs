@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Identity;
 
-namespace Server.Entities;
+namespace Server.Core.Entities;
 
 public class Order
 {

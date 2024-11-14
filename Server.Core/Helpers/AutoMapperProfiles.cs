@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using Server.DTOs;
-using Server.Entities;
+using Server.Core.DTOs;
+using Server.Core.Entities;
 
-namespace Server.Helpers;
+namespace Server.Core.Helpers;
 
 public class AutoMapperProfiles : Profile
 {

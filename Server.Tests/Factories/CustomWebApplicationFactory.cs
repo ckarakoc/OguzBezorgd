@@ -4,14 +4,18 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Server.Data;
+using Server.Core.Data;
+using Server.Core.Tests.Util;
 
-namespace Server.Tests.Factories;
+namespace Server.Core.Tests.Factories;
 
 public class CustomWebApplicationFactory<TProgram> : WebApplicationFactory<TProgram> where TProgram : class
 {
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
+        base.ConfigureWebHost(builder);
+        builder.UseEnvironment("Development");
+
         builder.ConfigureServices(services =>
         {
             var dbContextDescriptor = services.SingleOrDefault(d => d.ServiceType == typeof(DbContextOptions<DataContext>));
@@ -35,7 +39,20 @@ public class CustomWebApplicationFactory<TProgram> : WebApplicationFactory<TProg
                 options.UseSqlite(connection);
             });
         });
+    }
 
-        builder.UseEnvironment("Development");
+    public async Task SeedDatabaseAsync()
+    {
+        // Create a scope to resolve the DbContext
+        using (var scope = this.Services.CreateScope())
+        {
+            var dbContext = scope.ServiceProvider.GetRequiredService<DataContext>();
+
+            // Make sure the database is created
+            await dbContext.Database.EnsureCreatedAsync();
+
+            // Seed the database
+            await Seeder.SeedAsync(dbContext);
+        }
     }
 }

@@ -1,41 +1,70 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Server.DTOs;
-using Server.Entities;
-using Server.Interfaces;
+using Server.Core.DTOs;
+using Server.Core.Entities;
+using Server.Core.Interfaces;
 
-namespace Server.Controllers;
+namespace Server.Core.Controllers;
 
 public class UsersController(
     IUnitOfWork unitOfWork) : BaseApiController
 {
-    [HttpGet] // api/users
+    /// <summary>
+    /// Retrieves a list of all users.
+    /// </summary>
+    /// <returns>A list of UserDto objects.</returns>
+    [HttpGet] 
     public async Task<ActionResult<IEnumerable<UserDto>>> GetUsers()
     {
+        //todo
         var users = await unitOfWork.UserRepository.GetUsersAsync();
         return Ok(users);
     }
 
-    [HttpGet("{userName}")] // api/users/username
+    [HttpGet("{userName}")] 
     public async Task<ActionResult<UserDto>> GetUser(string userName)
     {
+        //todo
         var user = await unitOfWork.UserRepository.GetUserByUserNameAsync(userName);
         if (user == null) return NotFound("User not found");
         return Ok(user);
     }
 
-    [HttpGet("{id:int}")] // api/users/id
-    public async Task<ActionResult<UserDto>> GetUser(int id)
+    [HttpGet("{userId:int}")] 
+    public async Task<ActionResult<UserDto>> GetUser(int userId)
     {
-        var user = await unitOfWork.UserRepository.GetUserByIdAsync(id);
+        //todo
+        var user = await unitOfWork.UserRepository.GetUserByIdAsync(userId);
         if (user == null) return NotFound("User not found");
         return Ok(user);
     }
 
-    [HttpGet("{userName}/stores")]
-    public async Task<ActionResult<IEnumerable<Store>>> GetUserStoresAsync(string userName)
+    [HttpPut("{userId:int}")]
+    public async Task<ActionResult> UpdateUser(int userId, UserDto userDto)
     {
-        var user = await unitOfWork.UserRepository.GetUserByUserNameAsync(userName);
+        //todo
+        return NoContent();
+    }
+    
+    [HttpDelete("{userId:int}")]
+    public async Task<ActionResult> DeleteUser(int userId)
+    {
+        //todo
+        return NoContent(); 
+    }
+
+    [HttpGet("{userId:int}/roles")]
+    public async Task<ActionResult<IEnumerable<Store>>> GetUserRoles(int userId)
+    {
+        //todo
+        return NotFound("User not found");
+    }
+    
+    [HttpGet("{userId:int}/stores")]
+    public async Task<ActionResult<IEnumerable<Store>>> GetUserStores(int userId)
+    {
+        //todo
+        var user = await unitOfWork.UserRepository.GetUserByIdAsync(userId);
         if (user != null) return Ok(user.Stores);
         return NotFound("User not found");
     }

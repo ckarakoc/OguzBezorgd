@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Server.Data;
+using Server.Core.Data;
 
 #nullable disable
 
-namespace Server.Data.Migrations
+namespace Server.Core.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
     [Migration("20241113230403_Init")]

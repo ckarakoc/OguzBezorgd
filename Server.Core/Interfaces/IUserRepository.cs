@@ -1,7 +1,7 @@
-﻿using Server.DTOs;
-using Server.Entities;
+﻿using Server.Core.DTOs;
+using Server.Core.Entities;
 
-namespace Server.Interfaces;
+namespace Server.Core.Interfaces;
 
 public interface IUserRepository
 {

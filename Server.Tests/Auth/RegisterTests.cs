@@ -32,7 +32,7 @@ public class RegisterTests : IClassFixture<CustomWebApplicationFactory<Program>>
         // Arrange
         var content = CreateRegisterContent(UserName, Password);
         using var scope = _factory.Services.CreateScope();
-        var context = scope.ServiceProvider.GetRequiredService<DataContext>();
+        var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
         // Act
         _output.WriteLine(content.ReadAsStringAsync().Result);

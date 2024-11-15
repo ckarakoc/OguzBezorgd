@@ -19,13 +19,13 @@ public class CustomWebApplicationFactory<TProgram> : WebApplicationFactory<TProg
         {
             // Create a new scope to ensure dependencies are resolved for each test run
             using var scope = services.BuildServiceProvider().CreateScope();
-            var context = scope.ServiceProvider.GetRequiredService<DataContext>();
+            var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
             // Delete and recreate the database at the start of each test run
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
             
-            var dbContextDescriptor = services.SingleOrDefault(d => d.ServiceType == typeof(DbContextOptions<DataContext>));
+            var dbContextDescriptor = services.SingleOrDefault(d => d.ServiceType == typeof(DbContextOptions<ApplicationDbContext>));
             if (dbContextDescriptor != null) services.Remove(dbContextDescriptor);
 
             var dbConnectionDescriptor = services.SingleOrDefault(d => d.ServiceType == typeof(DbConnection));
@@ -40,7 +40,7 @@ public class CustomWebApplicationFactory<TProgram> : WebApplicationFactory<TProg
                 return connection;
             });
 
-            services.AddDbContext<DataContext>((container, options) =>
+            services.AddDbContext<ApplicationDbContext>((container, options) =>
             {
                 var connection = container.GetRequiredService<DbConnection>();
                 options.UseSqlite(connection);

@@ -54,7 +54,7 @@ public static class Seeder
         .RuleFor(u => u.LockoutEnd, f => null)
         .Generate();
 
-    public static async Task Seed(DataContext context, UserManager<User> userManager, RoleManager<IdentityRole<int>> roleManager)
+    public static async Task Seed(ApplicationDbContext context, UserManager<User> userManager, RoleManager<IdentityRole<int>> roleManager)
     {
         foreach (var user in _customers)
         {

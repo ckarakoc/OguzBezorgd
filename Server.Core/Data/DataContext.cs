@@ -5,16 +5,7 @@ using Server.Core.Entities;
 
 namespace Server.Core.Data;
 
-public class DataContext(DbContextOptions options)
-    : IdentityDbContext<
-        User,
-        IdentityRole<int>,
-        int,
-        IdentityUserClaim<int>,
-        IdentityUserRole<int>,
-        IdentityUserLogin<int>,
-        IdentityRoleClaim<int>,
-        IdentityUserToken<int>>(options)
+public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : IdentityDbContext<User, IdentityRole<int>, int>(options)
 {
     public DbSet<Order> Orders { get; set; }
     public DbSet<OrderItem> OrderItems { get; set; }

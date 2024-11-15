@@ -7,7 +7,7 @@ using Server.Core.Interfaces;
 
 namespace Server.Core.Data.Repositories;
 
-public class UserRepository(DataContext context, IMapper mapper) : IUserRepository
+public class UserRepository(ApplicationDbContext context, IMapper mapper) : IUserRepository
 {
     public void AddUser(User user)
     {

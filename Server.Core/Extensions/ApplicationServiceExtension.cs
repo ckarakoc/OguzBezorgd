@@ -11,9 +11,8 @@ public static class ApplicationServiceExtension
 {
     public static IServiceCollection AddApplicationService(this IServiceCollection services, IConfiguration config)
     {
-        services.AddControllers()
-            .AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
-        services.AddDbContext<DataContext>(opt => { opt.UseSqlite(config.GetConnectionString("DefaultConnection")); });
+        services.AddControllers().AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+        services.AddDbContext<ApplicationDbContext>(opt => { opt.UseSqlite(config.GetConnectionString("DefaultConnection")); });
         services.AddCors(options =>
         {
             options.AddPolicy("AllowLocalhost", builder =>
@@ -35,8 +34,8 @@ public static class ApplicationServiceExtension
         services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
         // Swagger
-        services.AddEndpointsApiExplorer();
-        services.AddSwaggerGen();
+        // services.AddEndpointsApiExplorer();
+        // services.AddSwaggerGen();
 
         return services;
     }

@@ -4,7 +4,7 @@ using Server.Core.Interfaces;
 
 namespace Server.Core.Data.Repositories;
 
-public class StoreRepository(DataContext context) : IStoreRepository
+public class StoreRepository(ApplicationDbContext context) : IStoreRepository
 {
     public void AddStore(Store store)
     {

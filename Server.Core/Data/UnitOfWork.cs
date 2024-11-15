@@ -3,7 +3,7 @@
 namespace Server.Core.Data;
 
 public class UnitOfWork(
-    DataContext context,
+    ApplicationDbContext context,
     IUserRepository userRepository,
     IStoreRepository storeRepository) : IUnitOfWork
 {

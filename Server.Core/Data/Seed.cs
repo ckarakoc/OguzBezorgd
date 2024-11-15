@@ -62,7 +62,7 @@ public static class Seed
     /// <param name="roleManager"></param> serviceProvider.GetRequiredService&lt;RoleManager&lt;IdentityRole&lt;int&gt;&gt;&gt;
     /// <param name="config"></param> WebApplication.CreateBuilder(args).Configuration
     public static async void SeedData(UserManager<User> userManager, RoleManager<IdentityRole<int>> roleManager,
-        DataContext context, IConfiguration config)
+        ApplicationDbContext context, IConfiguration config)
     {
         Console.WriteLine("Generating Users");
         foreach (var user in _customers)
@@ -100,7 +100,7 @@ public static class Seed
     /// <param name="userManager"></param> serviceProvider.GetRequiredService&lt;UserManager&lt;User&gt;&gt;();
     /// <param name="roleManager"></param> serviceProvider.GetRequiredService&lt;RoleManager&lt;IdentityRole&lt;int&gt;&gt;&gt;
     /// <param name="config"></param> WebApplication.CreateBuilder(args).Configuration
-    public static async void CleanupData(DataContext context)
+    public static async void CleanupData(ApplicationDbContext context)
     {
         Console.WriteLine("Dropping the Database...");
         await context.Database.EnsureDeletedAsync();

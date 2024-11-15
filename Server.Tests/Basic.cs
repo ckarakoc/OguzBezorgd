@@ -39,7 +39,7 @@ public class Basic : IClassFixture<CustomWebApplicationFactory<Program>>
             .Generate();
 
         using var scope = _factory.Services.CreateScope();
-        var context = scope.ServiceProvider.GetRequiredService<DataContext>();
+        var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
         await context.Users.AddAsync(bogus);
         await context.SaveChangesAsync();
 

@@ -1,2 +1,29 @@
-<p-button label="Register" (onClick)="register()" [link]="true"></p-button>
+<form [formGroup]="registerForm" (ngSubmit)="register()" class="flex h-screen flex-col items-center justify-center gap-1 bg-blue-500 [&>label]:text-white">
+  <label for="userName">UserName</label>
+  <input id="userName" type="text" formControlName="userName">
+
+  <label for="password">Password</label>
+  <input id="password" type="text" formControlName="password">
+
+  <label for="email">Email</label>
+  <input id="email" type="email" formControlName="email">
+
+  <label for="phoneNumber">Phone number</label>
+  <input id="phoneNumber" type="text" formControlName="phoneNumber">
+
+  <div class="flex flex-col items-center gap-1 [&>label]:text-white" formGroupName="userAddress">
+    <label for="streetAddress">Street (+ nr.)</label>
+    <input id="streetAddress" type="text" formControlName="streetAddress">
+    <label for="city">City</label>
+    <input id="city" type="text" formControlName="city">
+    <label for="state">State</label>
+    <input id="state" type="text" formControlName="state">
+    <label for="zipCode">Zip Code</label>
+    <input id="zipCode" type="text" formControlName="zipCode">
+  </div>
+
+  <button type="submit">Submit</button>
+  <!-- <button label="Register" type="submit" [link]="true"> -->
+</form>
+
 

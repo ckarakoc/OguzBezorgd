@@ -12,4 +12,8 @@ export class AuthService {
   login(model: any) {
     return this.http.post<User>(`${ env.apiUrl }/auth/login`, model)
   }
+
+  register(model: any) {
+    return this.http.post<User>(`${ env.apiUrl }/auth/register`, model)
+  }
 }

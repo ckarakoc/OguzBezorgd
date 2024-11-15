@@ -92,7 +92,7 @@ public class UsersController(IUnitOfWork unitOfWork) : BaseApiController
     /// </summary>
     /// <param name="userId">The ID of the user to retrieve stores for.</param>
     /// <returns>An <see cref="IEnumerable{Store}"/> of <see cref="Store"/> containing the user's associated stores, or <see cref="NotFound"/> if the user is not found.</returns>
-    [HttpGet("{userId:int}/stores")]
+    [HttpGet("{userId:int}/stores")] // api/stores
     public async Task<ActionResult<IEnumerable<Store>>> GetUserStores(int userId)
     {
         //todo

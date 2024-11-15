@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Server.Core.Entities;
 using Server.Core.Interfaces;
 
@@ -33,7 +34,7 @@ public class StoresController(
         return Ok();
     }
     
-    [HttpGet("{id:int}/products")]
+    [HttpGet("{id:int}/products")] 
     public async Task<ActionResult<IEnumerable<Store>>> GetStoreProducts(int id)
     {
         return Ok();

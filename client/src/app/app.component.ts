@@ -4,13 +4,15 @@ import { Aura } from 'primeng/themes/aura';
 import { PrimeNGConfig } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { definePreset, palette } from 'primeng/themes';
+import { DividerModule } from 'primeng/divider';
+import { InputTextModule } from 'primeng/inputtext';
 
 
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, ButtonModule],
+  imports: [RouterOutlet, ButtonModule, DividerModule, InputTextModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

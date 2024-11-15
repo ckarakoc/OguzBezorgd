@@ -50,7 +50,7 @@ public class UserRepository(DataContext context, IMapper mapper) : IUserReposito
         context.Users.Remove(user);
     }
 
-    public async void Save()
+    public async Task SaveAsync()
     {
         await context.SaveChangesAsync();
     }

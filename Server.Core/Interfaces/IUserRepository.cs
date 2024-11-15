@@ -20,5 +20,5 @@ public interface IUserRepository
     // Delete Operations
     void DeleteUser(User user);
     
-    void Save();
+    Task SaveAsync();
 }

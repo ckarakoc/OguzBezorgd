@@ -18,3 +18,21 @@ public class RegisterTests : IClassFixture<CustomWebApplicationFactory<Program>>
         _client = _factory.CreateClient();
     }
 }
+
+// todo
+// [Fact]
+// public async Task Register_ReturnsSuccessResult()
+// {
+//     // Arrange
+//     var user = new User() { Email = "[email protected]", Password = "testpassword" };
+//     var payload = JsonConvert.SerializeObject(user);
+//     var content = new StringContent(payload, Encoding.UTF8, "application/json");
+//
+//     // Act
+//     var response = await _client.PostAsync("/api/register", content);
+//
+//     // Assert
+//     response.EnsureSuccessStatusCode();
+//     var responseAsString = await response.Content.ReadAsStringAsync();
+//     Assert.Contains("Success", responseAsString);
+// }

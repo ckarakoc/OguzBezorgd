@@ -90,7 +90,7 @@ public static class Seed
 
         await userManager.CreateAsync(_deliverer, config["SuperUserPassword"] ?? "Pa$$w0rd");
         await userManager.AddToRoleAsync(_deliverer, "Deliverer");
-
+        
         await context.SaveChangesAsync();
     }
 

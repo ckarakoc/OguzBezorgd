@@ -50,32 +50,32 @@ foreach (var roleName in roleNames)
     }
 }
 
-// Create a superuser who will maintain the web app
-var superuser = new User
-{
-    UserName = "superuser",
-};
-
-var userPWD = config["SuperUserPassword"];
-var _user = await userManager.FindByNameAsync(superuser.UserName);
-
-if (_user == null && userPWD != null)
-{
-    var createPowerUser = await userManager.CreateAsync(superuser, userPWD);
-    if (createPowerUser.Succeeded)
-    {
-        await userManager.AddToRoleAsync(superuser, "Superman");
-    }
-    else
-    {
-        Console.WriteLine("Failed to create superuser");
-    }
-}
-
 if (app.Environment.IsDevelopment())
 {
+    // Create a superuser who will maintain the web app only in development environment
+    var superuser = new User
+    {
+        UserName = "superuser",
+    };
+
+    var userPwd = config["SuperUserPassword"];
+    var user = await userManager.FindByNameAsync(superuser.UserName);
+
+    if (user == null && userPwd != null)
+    {
+        var createPowerUser = await userManager.CreateAsync(superuser, userPwd);
+        if (createPowerUser.Succeeded)
+        {
+            await userManager.AddToRoleAsync(superuser, "Superman");
+        }
+        else
+        {
+            Console.WriteLine("Failed to create superuser");
+        }
+    }
+
     // Seed.SeedData(userManager, roleManager, context, config);
-    // appLifetime.ApplicationStopping.Register(() => { Seed.CleanupData(context); });
+    appLifetime.ApplicationStopping.Register(() => { context.Database.EnsureDeleted(); });
 }
 
 app.MapGet("/", () => "Hello World!");

@@ -11,11 +11,10 @@ public class AllowedUserNameCharactersValidation : ValidationAttribute
 
     protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
     {
-        if (value is string strValue && strValue.Any(x => char.IsLetterOrDigit(x) || x == '-' || x == '.' || x == '_' || x == '+'))
+        if (value is string strValue && strValue.All(x => char.IsLetterOrDigit(x) || x == '-' || x == '.' || x == '_' || x == '+'))
         {
-            return new ValidationResult(ErrorMessage);
+            return ValidationResult.Success;
         }
-
-        return ValidationResult.Success;
+        return new ValidationResult(ErrorMessage);
     }
 }

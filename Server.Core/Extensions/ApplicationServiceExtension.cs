@@ -1,9 +1,10 @@
 ﻿using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 using Server.Core.Data;
 using Server.Core.Data.Repositories;
-using Server.Core.Entities;
 using Server.Core.Interfaces;
+using Swashbuckle.AspNetCore.Filters;
 
 namespace Server.Core.Extensions;
 
@@ -36,7 +37,17 @@ public static class ApplicationServiceExtension
 
         // Swagger
         services.AddEndpointsApiExplorer();
-        services.AddSwaggerGen();
+        services.AddSwaggerGen(options =>
+        {
+            options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+            {
+                In = ParameterLocation.Header,
+                Name = "Authorization",
+                Type = SecuritySchemeType.ApiKey,
+            });
+
+            options.OperationFilter<SecurityRequirementsOperationFilter>();
+        });
 
         return services;
     }

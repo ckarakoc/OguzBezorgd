@@ -41,7 +41,7 @@ public class StoreRepository(DataContext context) : IStoreRepository
         context.Stores.Remove(store);
     }
 
-    public async Task Save()
+    public async Task SaveAsync()
     {
         await context.SaveChangesAsync();
     }

@@ -1,11 +1,16 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 using Server.Core.Data;
 using Server.Core.Entities;
 using Server.Core.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Logging
+builder.Host.UseSerilog((context, loggerConfig) =>
+    loggerConfig.ReadFrom.Configuration(context.Configuration)
+);
 var services = builder.Services;
 var config = builder.Configuration;
 
@@ -18,18 +23,21 @@ services.AddIdentityService(config);
 var app = builder.Build();
 var appLifetime = app.Lifetime;
 
+// Middleware
+app.UseCors("AllowLocalhost");
+app.UseAuthentication();
+app.UseAuthorization();
 
-// Configure the HTTP request pipeline.
+// Mapping
+app.MapControllers();
+
+// Configure Swagger
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-
-// Middleware
-
-app.MapControllers();
 
 // Insert Roles
 using var scope = app.Services.CreateScope();

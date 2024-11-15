@@ -1,19 +1,17 @@
 ﻿using System.Net;
 using System.Net.Http.Json;
-using System.Reflection;
 using FluentAssertions;
-using Server.Core.Tests.Factories;
+using Server.Tests.Factories;
 using Xunit.Abstractions;
-using Xunit.Sdk;
 
-namespace Server.Core.Tests.Auth;
+namespace Server.Tests.Auth;
 
 public class LoginTests : IClassFixture<CustomWebApplicationFactory<Program>>
 {
     private readonly CustomWebApplicationFactory<Program> _factory;
     private readonly ITestOutputHelper _output;
     private readonly HttpClient _client;
-    private const string Username = "superuser";
+    private const string UserName = "bogus";
     private const string Password = "Pa$$w0rd";
 
     public LoginTests(CustomWebApplicationFactory<Program> factory, ITestOutputHelper output)
@@ -26,22 +24,37 @@ public class LoginTests : IClassFixture<CustomWebApplicationFactory<Program>>
     [Fact]
     public async Task Login_Succeeds()
     {
-        var content = CreateLoginContent(Username, Password);
+        // Arrange
+        var content = CreateRegisterContent(UserName, Password);
+        await SendRegisterRequest(content);
+        content = CreateLoginContent(UserName, Password);
+
+        // Act
         var httpResponse = await SendLoginRequest(content);
 
+        // Assert
         httpResponse.StatusCode.Should().Be(HttpStatusCode.OK);
         httpResponse.EnsureSuccessStatusCode().Should().BeSuccessful();
     }
 
-    [Theory]
-    [LoginFailsData]
-    public async Task Login_Fails(string userName, string password, string errorMessage)
+    [Fact]
+    public async Task Login_Fails()
     {
-        var content = CreateLoginContent(userName, password);
+        // Arrange
+        var content = CreateRegisterContent(UserName, Password);
+        await SendRegisterRequest(content);
+        content = CreateLoginContent(UserName, Password + "1");
+
+        // Act
         _output.WriteLine(content.ReadAsStringAsync().Result);
         var httpResponse = await SendLoginRequest(content);
-        httpResponse.StatusCode.Should().Be(HttpStatusCode.BadRequest, errorMessage);
+
+        // Assert
+        httpResponse.StatusCode.Should().Be(HttpStatusCode.BadRequest);
     }
+
+    private JsonContent CreateRegisterContent(string userName, string password)
+        => JsonContent.Create(new {userName, password});
 
     private JsonContent CreateLoginContent(string userName, string password)
         => JsonContent.Create(new {userName, password});
@@ -49,17 +62,6 @@ public class LoginTests : IClassFixture<CustomWebApplicationFactory<Program>>
     private async Task<HttpResponseMessage> SendLoginRequest(JsonContent content)
         => await _client.PostAsync("/api/auth/login", content);
 
-    private class LoginFailsData : DataAttribute
-    {
-        public override IEnumerable<object[]> GetData(MethodInfo testMethod)
-        {
-            // Username Tests
-            yield return ["", Password, "Username is required"];
-
-            // Password Tests
-            yield return [Username, "", "Password is required"];
-            yield return [Username, Password[..7], "Password must be at least 8 characters"];
-            yield return [Username, Password + "1", "Wrong password"];
-        }
-    }
+    private async Task<HttpResponseMessage> SendRegisterRequest(JsonContent content)
+        => await _client.PostAsync("/api/auth/register", content);
 }

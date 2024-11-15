@@ -18,5 +18,5 @@ public interface IStoreRepository
     // Delete Operations
     void DeleteStore(Store store);
     
-    Task Save();
+    Task SaveAsync();
 }

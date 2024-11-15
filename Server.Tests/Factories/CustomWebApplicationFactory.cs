@@ -1,17 +1,12 @@
 ﻿using System.Data.Common;
-using Bogus;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Server.Core.Data;
-using Server.Core.Entities;
-using Server.Core.Tests.Util;
 
-namespace Server.Core.Tests.Factories;
+namespace Server.Tests.Factories;
 
 public class CustomWebApplicationFactory<TProgram> : WebApplicationFactory<TProgram> where TProgram : class
 {

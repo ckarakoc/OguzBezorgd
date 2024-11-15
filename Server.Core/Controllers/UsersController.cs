@@ -9,9 +9,8 @@ namespace Server.Core.Controllers;
 /// <summary>
 /// Controller responsible for managing user api calls.
 /// </summary>
-public class UsersController(IUnitOfWork unitOfWork, UserManager<User> userManager) : BaseApiController
+public class UsersController(IUnitOfWork unitOfWork) : BaseApiController
 {
-    
     /// <summary>
     /// Retrieves a list of all users.
     /// </summary>
@@ -19,7 +18,6 @@ public class UsersController(IUnitOfWork unitOfWork, UserManager<User> userManag
     [HttpGet]
     public async Task<ActionResult<IEnumerable<UserDto>>> GetUsers()
     {
-        //todo
         var users = await unitOfWork.UserRepository.GetUsersAsync();
         return Ok(users);
     }

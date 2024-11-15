@@ -11,8 +11,9 @@ public static class IdentityServiceExtensions
         services.AddIdentityCore<User>()
             .AddRoles<IdentityRole<int>>()
             .AddRoleManager<RoleManager<IdentityRole<int>>>()
-            .AddEntityFrameworkStores<DataContext>();
-        
+            .AddEntityFrameworkStores<DataContext>()
+            .AddSignInManager<SignInManager<User>>();
+
         services.Configure<IdentityOptions>(options =>
         {
             options.Password.RequireDigit = true;
@@ -21,12 +22,13 @@ public static class IdentityServiceExtensions
             options.Password.RequireUppercase = true;
             options.Password.RequiredLength = 8;
             options.Password.RequiredUniqueChars = 1;
-            
+
             options.User.AllowedUserNameCharacters = config["User:AllowedUserNameCharacters"] ?? "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._+";
             options.User.RequireUniqueEmail = false;
         });
 
         services.AddAuthentication();
+        services.AddAuthorization();
         return services;
     }
 }

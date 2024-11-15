@@ -5,10 +5,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Server.Core.Data;
 using Server.Core.Entities;
-using Server.Core.Tests.Factories;
+using Server.Tests.Factories;
 using Xunit.Abstractions;
 
-namespace Server.Core.Tests;
+namespace Server.Tests;
 
 public class Basic : IClassFixture<CustomWebApplicationFactory<Program>>
 {

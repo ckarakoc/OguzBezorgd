@@ -20,4 +20,7 @@ public class RegisterDto
 
     [DataType(DataType.PhoneNumber)]
     public string? PhoneNumber { get; set; }
+
+    [Required(ErrorMessage = "You need to assign a role of Customer, Partner or Deliverer")]
+    public string Role { get; set; } = null!;
 }

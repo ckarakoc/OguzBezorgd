@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Server.Core.Data;
 using Server.Core.Entities;
 
-namespace Server.Core.Tests.Util;
+namespace Server.Tests.Util;
 
 public static class Seeder
 {

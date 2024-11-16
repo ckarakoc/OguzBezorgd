@@ -1,6 +1,9 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Serilog;
 using Server.Core.DTOs;
 using Server.Core.Entities;
 using Server.Core.Interfaces;
@@ -42,9 +45,15 @@ public class UsersController(IUnitOfWork unitOfWork) : BaseApiController
     /// </summary>
     /// <param name="userId">The ID of the user to retrieve.</param>
     /// <returns>A <see cref="UserDto"/> object if found; otherwise, <see cref="StatusCodes.Status404NotFound"/>.</returns>
-    [HttpGet("{userId:int}")]
+    [HttpGet("{userId:int}"), Authorize]
     public async Task<ActionResult> GetUserById([FromRoute] int userId)
     {
+        var id = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+        if (id != userId)
+        {
+            return Forbid("Access denied.");
+        }
+        
         var user = await unitOfWork.UserRepository.GetUserByIdAsync(userId);
         
         if (user == null) return NotFound("User not found");

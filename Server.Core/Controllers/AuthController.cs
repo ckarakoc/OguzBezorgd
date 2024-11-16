@@ -16,6 +16,16 @@ public class AuthController(
     ITokenService tokenService,
     IMapper mapper) : BaseApiController
 {
+    /// <summary>
+    /// Handles user login by validating the username and password.
+    /// </summary>
+    /// <param name="loginDto">An object containing the user's login details (username and password).</param>
+    /// <returns>
+    /// Returns an HTTP response with:
+    /// - 200 OK: If login is successful, includes user details and a generated authentication token.
+    /// - 400 Bad Request: If no user is found with the provided username.
+    /// - 401 Unauthorized: If the password is incorrect.
+    /// </returns>
     [HttpPost("login")]
     public async Task<ActionResult<LoginResponseDto>> Login(LoginDto loginDto)
     {
@@ -97,7 +107,7 @@ public class AuthController(
     [HttpPost("refresh")]
     public async Task<ActionResult> Refresh([FromBody] string token)
     {
-        //todo
+        
         return Ok();
     }
 

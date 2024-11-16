@@ -77,7 +77,7 @@ if (app.Environment.IsDevelopment())
         }
         else
         {
-            Console.WriteLine("Failed to create superuser");
+            Log.Warning("Failed to create superuser");
         }
     }
 
@@ -89,7 +89,7 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-app.MapGet("/", () => "Hello World!");
+app.MapGet("/", () => "Hello World!").RequireAuthorization();
 
 app.Run();
 

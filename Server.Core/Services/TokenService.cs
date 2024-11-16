@@ -12,9 +12,9 @@ public class TokenService(IConfiguration config, UserManager<User> userManager) 
 {
     public async Task<string> GenerateTokenAsync(User user)
     {
-        var tokenKey = config["JwtSettings:SecretKey"] ?? throw new Exception("the token key is missing");
-        if (tokenKey.Length < 64) throw new Exception("TokenKey must be at least 64 characters long");
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenKey));
+        var secret = config["JwtSettings:SecretKey"] ?? throw new Exception("the token key is missing");
+        if (secret.Length < 64) throw new Exception("TokenKey must be at least 64 characters long");
+        var tokenKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret));
 
         var claims = new List<Claim>
         {
@@ -25,7 +25,7 @@ public class TokenService(IConfiguration config, UserManager<User> userManager) 
         var roles = await userManager.GetRolesAsync(user);
         claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
 
-        var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
+        var creds = new SigningCredentials(tokenKey, SecurityAlgorithms.HmacSha512Signature);
 
         var tokenDescriptor = new SecurityTokenDescriptor
         {
@@ -36,7 +36,7 @@ public class TokenService(IConfiguration config, UserManager<User> userManager) 
 
         var tokenHandler = new JwtSecurityTokenHandler();
         var token = tokenHandler.CreateToken(tokenDescriptor);
-
+        
         return tokenHandler.WriteToken(token);
     }
 }

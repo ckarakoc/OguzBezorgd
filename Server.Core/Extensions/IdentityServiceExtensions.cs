@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Security.Claims;
+using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
@@ -12,7 +13,7 @@ public static class IdentityServiceExtensions
     public static IServiceCollection AddIdentityService(this IServiceCollection services, IConfiguration config)
     {
         var tokenKey = config["JwtSettings:SecretKey"] ?? throw new Exception("the token key is missing");
-        
+
         services.AddIdentityCore<User>()
             .AddRoles<IdentityRole<int>>()
             .AddRoleManager<RoleManager<IdentityRole<int>>>()
@@ -36,7 +37,7 @@ public static class IdentityServiceExtensions
             options.User.AllowedUserNameCharacters = config["User:AllowedUserNameCharacters"] ?? "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._+";
             options.User.RequireUniqueEmail = false;
         });
-        
+
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
                 {
@@ -51,10 +52,21 @@ public static class IdentityServiceExtensions
                         ValidateIssuer = false,
                         ValidateAudience = false
                     };
+
+                    options.Events = new JwtBearerEvents
+                    {
+                        
+                    };
                 }
             );
-        
-        services.AddAuthorization();
+
+        services.AddAuthorization(opt =>
+        {
+            opt.AddPolicy("Admin", policy => policy.RequireClaim(ClaimTypes.Role, "Admin"));
+            opt.AddPolicy("Customer", policy => policy.RequireClaim(ClaimTypes.Role, "Customer"));
+            opt.AddPolicy("Deliverer", policy => policy.RequireClaim(ClaimTypes.Role, "Deliverer"));
+            opt.AddPolicy("Partner", policy => policy.RequireClaim(ClaimTypes.Role, "Partner"));
+        });
         return services;
     }
 }

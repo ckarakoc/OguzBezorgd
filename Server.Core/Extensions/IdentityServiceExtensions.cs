@@ -1,7 +1,11 @@
 ﻿using System.Security.Claims;
 using System.Text;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Server.Core.Data;
 using Server.Core.Entities;
@@ -53,12 +57,26 @@ public static class IdentityServiceExtensions
                         ValidateAudience = false
                     };
 
-                    options.Events = new JwtBearerEvents
-                    {
-                        
-                    };
+                    // options.Events = new JwtBearerEvents
+                    // {
+                    // };
                 }
             );
+
+        services.AddAuthentication(opt =>
+            {
+                opt.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                opt.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
+                opt.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            })
+            .AddCookie()
+            .AddGoogle(opt =>
+            {
+                // opt.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                opt.SignInScheme = Microsoft.AspNetCore.Identity.IdentityConstants.ExternalScheme;
+                opt.ClientId = config["Authentication:Google:ClientId"] ?? throw new Exception("You have no Google Client ID");
+                opt.ClientSecret = config["Authentication:Google:ClientSecret"] ?? throw new Exception("You have no Google Client Secret");
+            });
 
         services.AddAuthorization(opt =>
         {

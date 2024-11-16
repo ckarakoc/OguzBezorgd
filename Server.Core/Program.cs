@@ -27,6 +27,12 @@ app.UseCors("AllowLocalhost");
 app.UseAuthentication(); // before UseAuthorization() and MapControllers
 app.UseAuthorization(); // before MapControllers()
 
+
+app.UseDefaultFiles();
+// app.UseStaticFiles();
+
+app.UseHttpsRedirection();
+
 // Mapping
 app.MapControllers();
 
@@ -89,7 +95,7 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-app.MapGet("/", () => "Hello World!").RequireAuthorization();
+app.MapGet("/", () => "Hello World!");
 
 app.Run();
 

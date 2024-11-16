@@ -23,7 +23,7 @@ public static class ApplicationServiceExtension
                 builder.AllowAnyHeader()
                     .AllowAnyMethod()
                     .AllowCredentials()
-                    .WithOrigins("http://localhost:4200", "https://localhost:4200");
+                    .WithOrigins("http://localhost:4200", "https://localhost:4200", "http://localhost:5152", "https://localhost:5152");
             });
         });
 

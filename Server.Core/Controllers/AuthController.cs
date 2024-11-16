@@ -1,4 +1,8 @@
-﻿using AutoMapper;
+﻿using System.Security.Claims;
+using AutoMapper;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -16,6 +20,35 @@ public class AuthController(
     ITokenService tokenService,
     IMapper mapper) : BaseApiController
 {
+    [HttpGet("google-login")]
+    public async Task<ActionResult> LoginGoogle()
+    {
+        return Challenge(new AuthenticationProperties
+        {
+            RedirectUri = Url.Action("GoogleResponse"),
+        }, GoogleDefaults.AuthenticationScheme);
+    }
+
+    [HttpGet("google-response")]
+    public async Task<ActionResult> GoogleResponse()
+    {
+        return Ok();
+        // if (!User.Identity.IsAuthenticated)
+        // {
+        //     return Unauthorized();
+        // }
+        //
+        // var claims = User.Claims;
+        //
+        // var email = claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+        // var name = claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)?.Value;
+        // return Ok(new
+        // {
+        //     Name = name,
+        //     Email = email
+        // });
+    }
+
     /// <summary>
     /// Handles user login by validating the username and password.
     /// </summary>
@@ -37,7 +70,7 @@ public class AuthController(
         {
             return BadRequest("No user found");
         }
-        
+
         var result = await signInManager.CheckPasswordSignInAsync(user, password, false);
         if (!result.Succeeded)
         {
@@ -51,7 +84,8 @@ public class AuthController(
             UserName = user.UserName,
             Email = user.Email,
             PhoneNumber = user.PhoneNumber,
-            Token = await tokenService.GenerateTokenAsync(user)
+            AccessToken = await tokenService.GenerateTokenAsync(user),
+            RefreshToken = await tokenService.GenerateTokenAsync(user)
         });
     }
 
@@ -107,7 +141,6 @@ public class AuthController(
     [HttpPost("refresh")]
     public async Task<ActionResult> Refresh([FromBody] string token)
     {
-        
         return Ok();
     }
 

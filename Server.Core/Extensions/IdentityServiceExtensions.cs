@@ -11,6 +11,8 @@ public static class IdentityServiceExtensions
 {
     public static IServiceCollection AddIdentityService(this IServiceCollection services, IConfiguration config)
     {
+        var secretKey = config["JwtSettings:SecretKey"]; // tokenKey
+        
         services.AddIdentityCore<User>()
             .AddRoles<IdentityRole<int>>()
             .AddRoleManager<RoleManager<IdentityRole<int>>>()
@@ -34,23 +36,32 @@ public static class IdentityServiceExtensions
             options.User.AllowedUserNameCharacters = config["User:AllowedUserNameCharacters"] ?? "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._+";
             options.User.RequireUniqueEmail = false;
         });
+        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(options =>
+                {
+                    // options.Authority = null; 
+                    // options.Audience = null;
 
-        services.AddAuthentication(
-            //     JwtBearerDefaults.AuthenticationScheme)
-            // .AddJwtBearer(options =>
-            // {
-            //     options.Authority = "https://your-identity-provider.com"; // Your OAuth2 provider URL (e.g., Azure AD, IdentityServer, etc.)
-            //     options.Audience = "your-api"; // The audience of your API (usually the API name or a client ID)
-            //
-            //     options.TokenValidationParameters = new TokenValidationParameters
-            //     {
-            //         ValidateIssuerSigningKey = true,
-            //         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenKey)),
-            //         ValidateIssuer = false,
-            //         ValidateAudience = false
-            //     };
-            // }
-                );
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey)),
+                        ValidateIssuer = false,
+                        ValidateAudience = false
+                    };
+
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        // ValidateIssuer = true, 
+                        // ValidateAudience = true, 
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        // ValidIssuer = null,
+                        // ValidAudience = null,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey))
+                    };
+                }
+            );
         services.AddAuthorization();
         return services;
     }

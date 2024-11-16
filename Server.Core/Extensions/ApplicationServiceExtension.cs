@@ -1,9 +1,11 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Reflection;
+using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Server.Core.Data;
 using Server.Core.Data.Repositories;
 using Server.Core.Interfaces;
+using Server.Core.SwaggerSchemaFilters;
 using Swashbuckle.AspNetCore.Filters;
 
 namespace Server.Core.Extensions;
@@ -41,11 +43,34 @@ public static class ApplicationServiceExtension
         {
             options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
             {
-                In = ParameterLocation.Header,
                 Name = "Authorization",
                 Type = SecuritySchemeType.ApiKey,
+                Scheme = "oauth2",
+                In = ParameterLocation.Header,
             });
 
+            options.AddSecurityDefinition("bearer", new OpenApiSecurityScheme
+            {
+                Name = "Authorization",
+                Type = SecuritySchemeType.Http,
+                Scheme = "bearer",
+                BearerFormat = "JWT",
+                In = ParameterLocation.Header,
+                Description = "Enter 'Bearer' followed by your token."
+            });
+
+            // options.AddSecurityRequirement(new OpenApiSecurityRequirement
+            // {
+            //     {
+            //         new OpenApiSecurityScheme
+            //         {
+            //             Reference = new OpenApiReference {Type = ReferenceType.SecurityScheme, Id = "bearer"}
+            //         },
+            //         new string[] { }
+            //     }
+            // });
+
+            options.IncludeXmlComments(Assembly.GetExecutingAssembly());
             options.OperationFilter<SecurityRequirementsOperationFilter>();
         });
 

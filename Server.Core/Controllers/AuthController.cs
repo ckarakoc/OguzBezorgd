@@ -15,6 +15,7 @@ public class AuthController(
     RoleManager<IdentityRole<int>> roleManager,
     IMapper mapper) : BaseApiController
 {
+    
     [HttpPost("login")]
     public async Task<ActionResult> Login(LoginDto loginDto)
     {
@@ -32,11 +33,12 @@ public class AuthController(
         {
             return Unauthorized(result);
         }
+        
 
         var responseDto = mapper.Map<LoginResponseDto>(user);
         Log.Information("User {@user} logged in", user);
 
-        return Ok(responseDto);
+        return Ok(result);
     }
 
     /// <summary>

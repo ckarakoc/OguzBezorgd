@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Server.Core.DTOs;
 using Server.Core.Entities;
@@ -15,7 +16,7 @@ public class UsersController(IUnitOfWork unitOfWork) : BaseApiController
     /// Retrieves a list of all users.
     /// </summary>
     /// <returns>An <see cref="IEnumerable"/> of <see cref="UserDto"/> containing all user details.</returns>
-    [HttpGet]
+    [HttpGet, Authorize]
     public async Task<ActionResult<IEnumerable<UserDto>>> GetUsers()
     {
         var users = await unitOfWork.UserRepository.GetUsersAsync();

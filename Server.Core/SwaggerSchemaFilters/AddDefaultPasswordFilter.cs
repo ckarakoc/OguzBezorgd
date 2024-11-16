@@ -1,6 +1,5 @@
 ﻿using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
-using Serilog;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Server.Core.SwaggerSchemaFilters;

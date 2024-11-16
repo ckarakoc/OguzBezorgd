@@ -13,11 +13,11 @@ public class AuthController(
     UserManager<User> userManager,
     SignInManager<User> signInManager,
     RoleManager<IdentityRole<int>> roleManager,
+    ITokenService tokenService,
     IMapper mapper) : BaseApiController
 {
-    
     [HttpPost("login")]
-    public async Task<ActionResult> Login(LoginDto loginDto)
+    public async Task<ActionResult<LoginResponseDto>> Login(LoginDto loginDto)
     {
         var userName = loginDto.UserName;
         var password = loginDto.Password;
@@ -27,18 +27,22 @@ public class AuthController(
         {
             return BadRequest("No user found");
         }
-
+        
         var result = await signInManager.CheckPasswordSignInAsync(user, password, false);
         if (!result.Succeeded)
         {
             return Unauthorized(result);
         }
-        
 
-        var responseDto = mapper.Map<LoginResponseDto>(user);
         Log.Information("User {@user} logged in", user);
 
-        return Ok(result);
+        return Ok(new LoginResponseDto
+        {
+            UserName = user.UserName,
+            Email = user.Email,
+            PhoneNumber = user.PhoneNumber,
+            Token = await tokenService.GenerateTokenAsync(user)
+        });
     }
 
     /// <summary>

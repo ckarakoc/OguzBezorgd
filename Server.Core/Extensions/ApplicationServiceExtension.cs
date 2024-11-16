@@ -5,8 +5,7 @@ using Microsoft.OpenApi.Models;
 using Server.Core.Data;
 using Server.Core.Data.Repositories;
 using Server.Core.Interfaces;
-using Server.Core.SwaggerSchemaFilters;
-using Swashbuckle.AspNetCore.Filters;
+using Server.Core.Services;
 
 namespace Server.Core.Extensions;
 
@@ -28,6 +27,9 @@ public static class ApplicationServiceExtension
             });
         });
 
+        // Add services
+        services
+            .AddScoped<ITokenService, TokenService>();
 
         // Add repositories
         services
@@ -41,37 +43,40 @@ public static class ApplicationServiceExtension
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen(options =>
         {
-            options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
-            {
-                Name = "Authorization",
-                Type = SecuritySchemeType.ApiKey,
-                Scheme = "oauth2",
-                In = ParameterLocation.Header,
-            });
+            // options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+            // {
+            //     Name = "Authorization",
+            //     Type = SecuritySchemeType.ApiKey,
+            //     Scheme = "oauth2",
+            //     In = ParameterLocation.Header,
+            // });
 
-            options.AddSecurityDefinition("bearer", new OpenApiSecurityScheme
+            options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
             {
                 Name = "Authorization",
                 Type = SecuritySchemeType.Http,
                 Scheme = "bearer",
                 BearerFormat = "JWT",
                 In = ParameterLocation.Header,
-                Description = "Enter 'Bearer' followed by your token."
+                Description = "Enter 'Bearer ' followed by your token."
             });
 
-            // options.AddSecurityRequirement(new OpenApiSecurityRequirement
-            // {
-            //     {
-            //         new OpenApiSecurityScheme
-            //         {
-            //             Reference = new OpenApiReference {Type = ReferenceType.SecurityScheme, Id = "bearer"}
-            //         },
-            //         new string[] { }
-            //     }
-            // });
+            options.AddSecurityRequirement(new OpenApiSecurityRequirement
+            {
+                {
+                    new OpenApiSecurityScheme
+                    {
+                        Reference = new OpenApiReference
+                        {
+                            Type = ReferenceType.SecurityScheme,
+                            Id = "Bearer"
+                        }
+                    },
+                    new string[] { }
+                }
+            });
 
             options.IncludeXmlComments(Assembly.GetExecutingAssembly());
-            options.OperationFilter<SecurityRequirementsOperationFilter>();
         });
 
         return services;

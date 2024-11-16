@@ -11,7 +11,7 @@ public static class IdentityServiceExtensions
 {
     public static IServiceCollection AddIdentityService(this IServiceCollection services, IConfiguration config)
     {
-        var secretKey = config["JwtSettings:SecretKey"]; // tokenKey
+        var tokenKey = config["JwtSettings:SecretKey"] ?? throw new Exception("the token key is missing");
         
         services.AddIdentityCore<User>()
             .AddRoles<IdentityRole<int>>()
@@ -36,6 +36,7 @@ public static class IdentityServiceExtensions
             options.User.AllowedUserNameCharacters = config["User:AllowedUserNameCharacters"] ?? "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._+";
             options.User.RequireUniqueEmail = false;
         });
+        
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
                 {
@@ -44,24 +45,15 @@ public static class IdentityServiceExtensions
 
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
+                        ValidateLifetime = true,
                         ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey)),
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenKey)),
                         ValidateIssuer = false,
                         ValidateAudience = false
                     };
-
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        // ValidateIssuer = true, 
-                        // ValidateAudience = true, 
-                        ValidateLifetime = true,
-                        ValidateIssuerSigningKey = true,
-                        // ValidIssuer = null,
-                        // ValidAudience = null,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey))
-                    };
                 }
             );
+        
         services.AddAuthorization();
         return services;
     }

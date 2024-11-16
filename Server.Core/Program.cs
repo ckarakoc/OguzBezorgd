@@ -8,8 +8,7 @@ using Server.Core.Extensions;
 var builder = WebApplication.CreateBuilder(args);
 
 // Logging
-builder.Host.UseSerilog((context, loggerConfig) =>
-    loggerConfig.ReadFrom.Configuration(context.Configuration)
+builder.Host.UseSerilog((context, loggerConfig) => { loggerConfig.ReadFrom.Configuration(context.Configuration); }
 );
 var services = builder.Services;
 var config = builder.Configuration;
@@ -25,8 +24,8 @@ var appLifetime = app.Lifetime;
 
 // Middleware
 app.UseCors("AllowLocalhost");
-app.UseAuthentication();
-app.UseAuthorization();
+app.UseAuthentication(); // before UseAuthorization() and MapControllers
+app.UseAuthorization(); // before MapControllers()
 
 // Mapping
 app.MapControllers();
@@ -35,7 +34,7 @@ app.MapControllers();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(opt => { opt.ConfigObject.AdditionalItems.Add("persistAuthorization", "true"); });
 }
 
 
@@ -83,7 +82,11 @@ if (app.Environment.IsDevelopment())
     }
 
     // Seed.SeedData(userManager, roleManager, context, config);
-    appLifetime.ApplicationStopping.Register(() => { context.Database.EnsureDeleted(); });
+    appLifetime.ApplicationStopping.Register(() =>
+    {
+        Log.CloseAndFlush();
+        context.Database.EnsureDeleted();
+    });
 }
 
 app.MapGet("/", () => "Hello World!");

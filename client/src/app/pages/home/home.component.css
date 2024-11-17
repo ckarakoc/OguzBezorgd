@@ -1,0 +1,65 @@
+:host {
+  --hamburger-size: 24px;
+  --hamburger-hover-color: rgb(24 24 27 / 0.05);
+  --hamburger-padding: 1.25rem;
+  --hamburger-stick-height: 3px;
+}
+
+/* Hamburger Start */
+
+.hamburger {
+  cursor: pointer;
+  width: var(--hamburger-size);
+  height: var(--hamburger-size);
+  transition: all 0.25s;
+  position: relative;
+  padding: var(--hamburger-padding);
+}
+
+.hamburger:hover {
+  background-color: var(--hamburger-hover-color);
+}
+
+.hamburger-top,
+.hamburger-middle,
+.hamburger-bottom {
+  content: '';
+  position: absolute;
+  width: 24px;
+  height: var(--hamburger-stick-height);
+  top: 0;
+  left: 0;
+  background: black;
+  transform: rotate(0);
+  transition: all 0.5s;
+}
+
+.hamburger-top {
+  transform: translateX(calc(50% - 3px)) translateY(calc((1 * var(--hamburger-size) / 3) - (var(--hamburger-size) / 6) + 6px));
+}
+
+.hamburger-middle {
+  transform: translateX(calc(var(--hamburger-padding) / 2.3)) translateY(calc((2 * var(--hamburger-size) / 3) - (var(--hamburger-size) / 6) + 6px))
+}
+
+.hamburger-bottom {
+  transform: translateX(calc(var(--hamburger-padding) / 2.3)) translateY(calc((3 * var(--hamburger-size) / 3) - (var(--hamburger-size) / 6) + 6px))
+}
+
+.open {
+  transform: rotate(90deg) translateY(0px);
+}
+
+.open .hamburger-top {
+  transform: rotate(45deg) translateY(7px) translateX(18px);
+}
+
+.open .hamburger-middle {
+  display: none;
+}
+
+.open .hamburger-bottom {
+  transform: rotate(-45deg) translateY(18px) translateX(-7px);
+}
+
+/* Hamburger End */

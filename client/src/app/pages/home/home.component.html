@@ -1,15 +1,27 @@
-<div class="topbar flex justify-between h-20 w-full p-3 bg-gradient-to-r from-orange-50 from-60% to-orange-500 shadow-2xl ">
+<div class="flex h-20 w-full items-center justify-between bg-gradient-to-r from-orange-50 to-orange-500 p-3 shadow-2xl topbar from-60%">
   <div class="logo">
     <a href="#">
-      <img ngSrc="/assets/images/oguz_logo.png" class="" alt="Logo" width="170" height="32"/>
+      <img ngSrc="/assets/images/oguz_logo.png" class="" alt="Logo" width="170" height="32" priority/>
     </a>
   </div>
-  <div class="flex flex-row gap-2">
-    <a icon="pi pi-truck" label="Word bezorger"></a>
-    <a icon="pi pi-shop" label="Word partner"></a>
-    <a icon="pi pi-user" label="Inloggen"></a>
+  <div class="flex flex-row items-center justify-center gap-4">
+    <button type="button" class="flex flex-row items-center justify-center gap-2 rounded-full p-3 font-jetbrains-mono hover:bg-zinc-900 hover:bg-opacity-5">
+      <fa-icon [icon]="faTruck"></fa-icon>
+      <span>Word bezorger</span>
+    </button>
+    <button type="button" class="flex flex-row items-center justify-center gap-2 rounded-full p-3 font-jetbrains-mono hover:bg-zinc-900 hover:bg-opacity-5">
+      <fa-icon [icon]="faShop"></fa-icon>
+      <span>Word partner</span>
+    </button>
+    <button type="button" class="flex flex-row items-center justify-center gap-2 rounded-full p-3 font-jetbrains-mono hover:bg-zinc-900 hover:bg-opacity-5">
+      <fa-icon [icon]="faUser"></fa-icon>
+      <span>Inloggen</span>
+    </button>
+    <button #hamburgerBtn type="button" class="rounded-full hamburger" (click)="hamburgerClick($event)">
+      <span class="hamburger-top"></span>
+      <span class="hamburger-middle"></span>
+      <span class="hamburger-bottom"></span>
+    </button>
   </div>
 </div>
 
-<button mat-button>Basic</button>
-<fa-icon [icon]="faTruck"></fa-icon>

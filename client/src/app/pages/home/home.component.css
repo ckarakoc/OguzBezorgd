@@ -52,14 +52,17 @@
 
 .open .hamburger-top {
   transform: rotate(45deg) translateY(7px) translateX(18px);
+  background: white;
 }
 
 .open .hamburger-middle {
   display: none;
+  background: white;
 }
 
 .open .hamburger-bottom {
   transform: rotate(-45deg) translateY(18px) translateX(-7px);
+  background: white;
 }
 
 /* Hamburger End */

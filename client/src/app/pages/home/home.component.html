@@ -111,9 +111,9 @@
 
 <!-- Content -->
 <div class="flex flex-col xl:flex-row w-full h-3/5 font-inter">
-  <div class="flex flex-col justify-center items-center h-full bg-gray-200 xl:basis-1/2">
-    <!-- Upper part -->
-    <div class="flex flex-col items-start gap-1">
+  <!-- Upper part -->
+  <div class="flex flex-col justify-center items-center h-1/4 xl:h-full bg-gray-100 xl:basis-1/2">
+    <div class="flex flex-col items-start gap-1 m-10">
       <h1 class="text-gray-800">Bestel eten en meer</h1>
       <h2 class="text-gray-600">Restaurants en boodschappen in de buurt</h2>
       <div class="border border-black rounded-full focus-within:border-orange-500">
@@ -128,10 +128,71 @@
       </div>
     </div>
   </div>
-  <div class="bg-gray-200 xl:basis-1/2">
-    <!-- Lower part -->
+
+  <!-- Lower part -->
+  <div class="bg-gray-100 xl:basis-1/2 h-96 md:h-3/4 xl:h-full">
     <div class="bigImg bg-orange-500 object-contain w-full h-full flex justify-center items-center">
       <img class="object-contain w-full h-1/2" src="assets/images/oguz_bezorgd_content2.png" alt="">
+    </div>
+  </div>
+</div>
+
+<!-- Triple -->
+<div class="pb-32 md:mt-20">
+  <div class="container relative mx-auto flex flex-col items-start px-6 md:space-x-7 md:flex-row">
+    <div class="absolute top-32 left-16 hidden h-3 w-10/12 bg-orange-500 md:block"></div>
+    <div class="absolute left-1/2 -ml-1 h-full w-2 bg-orange-500 md:hidden"></div>
+
+    <!-- Box 1 -->
+    <div class="group relative flex flex-col rounded-lg bg-white p-6 space-y-6 w-full md:min-h-72 md:w-1/3 border-2 border-orange-500 hover:border-orange-600">
+      <div class="absolute -top-10 left-1/2 -ml-10 md:left-16">
+        <div class="flex h-20 w-20 items-center justify-center rounded-full p-4 bg-orange-500 group-hover:bg-orange-600">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="white" role="presentation" focusable="false" viewBox="0 0 32 32" aria-hidden="true" class="c-pieIcon c-pieIcon--location-pin-large" width="80" height="80">
+            <path
+              d="M24.75 26.5c0 2.406-4.533 3.5-8.75 3.5-4.218 0-8.75-1.094-8.75-3.5 0-1.313 1.339-2.214 3.15-2.765l1.426 1.435C9.875 25.625 9 26.237 9 26.5c0 .446 2.406 1.75 7 1.75 4.594 0 7-1.304 7-1.75 0-.262-.875-.875-2.826-1.33l1.426-1.435c1.811.551 3.15 1.453 3.15 2.765ZM8.746 19.605a10.255 10.255 0 1 1 14.508 0L16 26.859l-7.254-7.254Zm-1.251-7.254a8.478 8.478 0 0 0 2.485 6.02l6.02 6.02 6.02-6.02a8.513 8.513 0 1 0-14.525-6.02Zm4.13.149a4.376 4.376 0 1 1 8.751 0 4.376 4.376 0 0 1-8.751 0Zm1.75 0a2.624 2.624 0 1 0 5.248 0 2.624 2.624 0 0 0-5.248 0Z"></path>
+          </svg>
+        </div>
+      </div>
+      <h5 class="pt-6 text-center text-xl font-bold md:text-left"> Vertel ons waar je je bevindt </h5>
+      <p class="text-center text-gray-400 md:text-left group-hover:text-black">
+        Wij laten je zien bij welke winkels en restaurants in de buurt je kan bestellen.
+      </p>
+    </div>
+
+    <!-- Box 2 -->
+    <div class="group relative mt-24 flex flex-col rounded-lg bg-white p-6 space-y-6 w-full md:min-h-72 md:mt-8 md:w-1/3 border-2 border-orange-500 hover:border-orange-600">
+      <div class="absolute -top-10 left-1/2 -ml-10 md:left-16">
+        <div class="flex h-20 w-20 items-center justify-center rounded-full p-4 bg-orange-500 group-hover:bg-orange-600">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="white" role="presentation" focusable="false" viewBox="0 0 32 32" aria-hidden="true" class="c-pieIcon c-pieIcon--sandwich-large" width="80" height="80">
+            <path
+              d="M28.836 15.125v1.75c-1.898 0-2.038.464-2.275 1.304a2.94 2.94 0 0 1-2.126 2.354 3.062 3.062 0 0 1-3.395-1.164c-.49-.517-.761-.788-1.234-.788-.289 0-.306 0-.542.569-.333.779-.875 2.091-3.264 2.091s-2.931-1.312-3.264-2.091c-.236-.525-.236-.525-.542-.525-.473 0-.744.271-1.234.788a3.062 3.062 0 0 1-3.395 1.163 2.94 2.94 0 0 1-2.126-2.354c-.236-.875-.376-1.303-2.275-1.303v-1.794c2.975 0 3.587 1.269 3.955 2.564.192.665.28.971.945 1.163.665.193.98 0 1.619-.682a3.342 3.342 0 0 1 2.51-1.295 2.188 2.188 0 0 1 2.153 1.628c.289.665.438 1.032 1.654 1.032s1.365-.367 1.654-1.032a2.187 2.187 0 0 1 2.152-1.628 3.343 3.343 0 0 1 2.511 1.339c.64.674.875.875 1.62.682.743-.192.752-.498.944-1.163.368-1.34.98-2.608 3.955-2.608ZM25.625 23a.875.875 0 0 1-.875.875H7.25A.875.875 0 0 1 6.375 23v-1.75h-1.75V23a2.625 2.625 0 0 0 2.625 2.625h17.5A2.625 2.625 0 0 0 27.375 23v-1.75h-1.75V23Zm-21-9.625v-1.531a5.582 5.582 0 0 1 8.584-4.594 5.46 5.46 0 0 1 2.983-.875c.99.003 1.962.266 2.818.761a5.556 5.556 0 0 1 8.365 4.708v1.531a.875.875 0 0 1-.875.875h-21a.875.875 0 0 1-.875-.875Zm1.75-.875h19.25v-.656a3.78 3.78 0 0 0-3.824-3.719 3.876 3.876 0 0 0-1.312.236c.31.38.565.802.761 1.252h-2.012a3.841 3.841 0 0 0-4.655-1.13c.274.35.509.728.7 1.13h-2.04A3.859 3.859 0 0 0 10.2 8.125a3.78 3.78 0 0 0-3.824 3.719v.656Z"></path>
+          </svg>
+        </div>
+      </div>
+      <h5 class="pt-6 text-center text-xl font-bold md:text-left"> Vind wat je zoekt </h5>
+      <p class="text-center text-gray-400 md:text-left group-hover:text-black">
+        Zoek naar producten of gerechten, bedrijven of keukens.
+      </p>
+    </div>
+
+    <!-- Box 3 -->
+    <div class="group relative mt-24 flex flex-col rounded-lg bg-white p-6 space-y-6 w-full md:min-h-72 md:mt-16 md:w-1/3 border-2 border-orange-500 hover:border-orange-600">
+      <div class="absolute -top-10 left-1/2 -ml-10 md:left-16">
+        <div class="flex h-20 w-20 items-center justify-center rounded-full p-4 bg-orange-500 group-hover:bg-orange-600">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="white" role="presentation" focusable="false" viewBox="0 0 32 32" aria-hidden="true" class="c-pieIcon c-pieIcon--food-ready-large" width="80" height="80">
+            <path d="m9.376 13.996 1.374 1.129A7 7 0 0 1 16 12.719v-1.75a8.75 8.75 0 0 0-6.624 3.027Z"></path>
+            <path
+              d="M13.874 21.25c.06-.596.186-1.183.376-1.75H5.937a10.054 10.054 0 0 1 18.585-5.329 8.006 8.006 0 0 1 2.564 1.304 11.83 11.83 0 0 0-8.951-7.586c.316-.442.487-.97.49-1.514a2.625 2.625 0 0 0-5.25 0c.003.543.174 1.072.49 1.514A11.83 11.83 0 0 0 4.187 19.5H2.875v5.25H14.25a8.91 8.91 0 0 1-.385-1.75h-9.24v-1.75h9.249ZM16 5.5a.875.875 0 1 1 0 1.75.875.875 0 0 1 0-1.75Z"></path>
+            <path d="m21.285 22.764-1.199-1.19-1.233 1.233 2.432 2.433 4.113-4.121-1.234-1.234-2.879 2.879Z"></path>
+            <path
+              d="M28.25 19.675a6.877 6.877 0 0 0-1.794-2.511 6.6 6.6 0 0 0-1.846-1.12 6.459 6.459 0 0 0-2.485-.482 6.536 6.536 0 0 0-4.288 1.602 6.766 6.766 0 0 0-1.854 2.625 6.79 6.79 0 0 0-.394 1.75v.551a6.562 6.562 0 1 0 12.661-2.415Zm-6.125 7.262a4.821 4.821 0 0 1-4.813-4.812v-.551a4.77 4.77 0 0 1 .552-1.75c.186-.313.403-.606.647-.875a4.804 4.804 0 0 1 7.158 0c.244.27.46.563.647.875.296.542.483 1.136.552 1.75v.551a4.822 4.822 0 0 1-4.743 4.813Z"></path>
+          </svg>
+        </div>
+      </div>
+      <h5 class="pt-6 text-center text-xl font-bold md:text-left"> Bestelling voor bezorging of afhalen </h5>
+      <p class="text-center text-gray-400 md:text-left group-hover:text-black">
+        We houden je op de hoogte van de voortgang van je bestelling.
+      </p>
     </div>
   </div>
 </div>

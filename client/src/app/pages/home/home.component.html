@@ -1,3 +1,4 @@
+<!-- Top Bar -->
 <div class="flex h-20 w-full items-center justify-between bg-gradient-to-r from-orange-50 to-orange-500 p-3 shadow-2xl topbar from-60%">
   <div class="logo z-30">
     <a href="#">
@@ -14,7 +15,7 @@
       <span>Word partner</span>
     </button>
     <button #loginButton
-      type="button" class="flex flex-row items-center justify-center gap-2 rounded-full p-3 font-jetbrains-mono hover:bg-zinc-900 hover:bg-opacity-5"
+            type="button" class="flex flex-row items-center justify-center gap-2 rounded-full p-3 font-jetbrains-mono hover:bg-zinc-900 hover:bg-opacity-5"
             (click)="toggleLoginModal($event)">
       <fa-icon [icon]="faUser"></fa-icon>
       <span class="hidden md:block">Inloggen</span>
@@ -27,32 +28,45 @@
   </div>
 </div>
 
+<!-- Hamburger Menu -->
 <div #hamburgerMenu
-  class="fixed inset-0 z-20 h-full w-full bg-gray-900 opacity-80 flex flex-col justify-center text-white uppercase divide-y-2 divide-gray-300 px-16 md:hidden hidden">
-  <div class="w-full py-3 text-center">
-    <a routerLink="/deliverer" fragment="features" class="block text-orange-500 hover:text-orange-600 font-extrabold">Word bezorger</a>
-  </div>
-  <div class="w-full py-3 text-center">
-    <a routerLink="/partner" fragment="download" class="block text-orange-500 hover:text-orange-600 font-extrabold">Word partner</a>
-  </div>
-  <div class="w-full py-3 text-center">
-    <a routerLink="/customer"  class="block text-orange-500 hover:text-orange-600 font-extrabold">Word Klant</a>
-  </div>
-  <div class="flex flex-row gap-3 pt-4">
-    <button type="button" routerLink="/login" class="bg-orange-500 mx-auto rounded-xl flex justify-start items-center gap-4 py-2 pl-6 text-white hover:bg-orange-600 w-52 border-2 border-white">
-      <fa-icon [icon]="faUserSolid" class=""></fa-icon>
-      <span>Inloggen</span>
-    </button>
-    <button type="button" routerLink="/register" class="bg-orange-500 mx-auto rounded-xl flex justify-start items-center gap-4 py-2 pl-6 text-white hover:bg-orange-600 w-52 border-2 border-white">
-      <fa-icon [icon]="faUserPlus" class=""></fa-icon>
-      <span>Registreren</span>
-    </button>
+     class="fixed inset-0 z-20 h-full w-full flex justify-center text-white uppercase md:hidden hidden">
+
+  <!-- Hamburger Background -->
+  <div class="absolute inset-0 bg-gray-900 opacity-80 z-10"></div>
+
+  <!-- Hamburger Content -->
+  <div class="flex flex-col inset-0  h-full w-full  justify-center text-white uppercase divide-y-2 divide-gray-300 px-16 z-20">
+    <div class="w-full py-3 text-center">
+      <a routerLink="/deliverer" fragment="features" class="block text-orange-500 hover:text-orange-600 font-extrabold">Word bezorger</a>
+    </div>
+    <div class="w-full py-3 text-center">
+      <a routerLink="/partner" fragment="download" class="block text-orange-500 hover:text-orange-600 font-extrabold">Word partner</a>
+    </div>
+    <div class="w-full py-3 text-center">
+      <a routerLink="/customer" class="block text-orange-500 hover:text-orange-600 font-extrabold">Word Klant</a>
+    </div>
+    <div class="flex flex-row gap-3 pt-4">
+      <button type="button" routerLink="/login" class="bg-orange-500 mx-auto rounded-xl flex justify-start items-center gap-4 py-2 pl-6 text-white hover:bg-orange-600 w-52 border-2 border-white">
+        <fa-icon [icon]="faUserSolid" class=""></fa-icon>
+        <span>Inloggen</span>
+      </button>
+      <button type="button" routerLink="/register" class="bg-orange-500 mx-auto rounded-xl flex justify-start items-center gap-4 py-2 pl-6 text-white hover:bg-orange-600 w-52 border-2 border-white">
+        <fa-icon [icon]="faUserPlus" class=""></fa-icon>
+        <span>Registreren</span>
+      </button>
+    </div>
   </div>
 </div>
 
+<!-- Login Modal -->
 <div #loginModal
-     class="fixed inset-0 z-20 h-full w-full bg-gray-900 opacity-80 flex flex-col justify-center items-center hidden">
-  <div class="flex flex-row justify-center font-inter md:flex-row bg-orange-500 p-4 m-4 rounded-xl z-30 opacity-100">
+     class="fixed inset-0 z-20 h-full w-full flex flex-col justify-center items-center hidden">
+  <!-- Modal Background -->
+  <div class="absolute inset-0 bg-gray-900 opacity-80 z-10"></div>
+
+  <!-- Modal Content -->
+  <div class="flex flex-row justify-center font-inter md:flex-row bg-orange-500 p-4 m-4 rounded-xl z-30">
     <div class="flex flex-col justify-center md:flex-row bg-orange-500 p-4 m-4">
       <div id="loginField" class="">
         <form #loginForm action="" class="flex flex-col justify-center gap-2">
@@ -91,6 +105,33 @@
       <button (click)="toggleLoginModal($event)" class="rounded-full bg-orange-500 border-2 border-white w-10 h-10 group-hover:bg-white">
         <span class="bg-clip-text text-transparent bg-white group-hover:bg-orange-500 font-extrabold">X</span>
       </button>
+    </div>
+  </div>
+</div>
+
+<!-- Content -->
+<div class="flex flex-col xl:flex-row w-full h-3/5 font-inter">
+  <div class="flex flex-col justify-center items-center h-full bg-gray-200 xl:basis-1/2">
+    <!-- Upper part -->
+    <div class="flex flex-col items-start gap-1">
+      <h1 class="text-gray-800">Bestel eten en meer</h1>
+      <h2 class="text-gray-600">Restaurants en boodschappen in de buurt</h2>
+      <div class="border border-black rounded-full focus-within:border-orange-500">
+        <!-- Zoek input -->
+        <input class="py-2 pl-2 pr-10 outline-none rounded-l-full peer border-l border-y border-white
+        focus:border-y focus:border-y-orange-500 focus:border-l focus:border-l-orange-500" placeholder="Volledige adres" type="text"/>
+
+        <button class="bg-white py-2 px-1 rounded-r-full border-y border-r border-y-white border-r-white
+         peer-focus:border-y-orange-500 peer-focus:border-r-orange-500">
+          <span class="bg-orange-500 w-auto h-auto p-2 px-4 rounded-full font-bold text-white hover:bg-orange-600">Zoek</span>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="bg-gray-200 xl:basis-1/2">
+    <!-- Lower part -->
+    <div class="bigImg bg-orange-500 object-contain w-full h-full flex justify-center items-center">
+      <img class="object-contain w-full h-1/2" src="assets/images/oguz_bezorgd_content2.png" alt="">
     </div>
   </div>
 </div>

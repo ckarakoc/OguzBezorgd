@@ -5,23 +5,67 @@
     </a>
   </div>
   <div class="flex flex-row items-center justify-center gap-4">
-    <button type="button" class="flex flex-row items-center justify-center gap-2 rounded-full p-3 font-jetbrains-mono hover:bg-zinc-900 hover:bg-opacity-5">
+    <button type="button" class="hidden md:flex flex-row items-center justify-center gap-2 rounded-full p-3 font-jetbrains-mono hover:bg-zinc-900 hover:bg-opacity-5">
       <fa-icon [icon]="faTruck"></fa-icon>
       <span>Word bezorger</span>
     </button>
-    <button type="button" class="flex flex-row items-center justify-center gap-2 rounded-full p-3 font-jetbrains-mono hover:bg-zinc-900 hover:bg-opacity-5">
+    <button type="button" class="hidden md:flex flex-row items-center justify-center gap-2 rounded-full p-3 font-jetbrains-mono hover:bg-zinc-900 hover:bg-opacity-5">
       <fa-icon [icon]="faShop"></fa-icon>
       <span>Word partner</span>
     </button>
-    <button type="button" class="flex flex-row items-center justify-center gap-2 rounded-full p-3 font-jetbrains-mono hover:bg-zinc-900 hover:bg-opacity-5">
+    <button type="button" class="hidden md:flex flex-row items-center justify-center gap-2 rounded-full p-3 font-jetbrains-mono hover:bg-zinc-900 hover:bg-opacity-5"
+            (click)="toggleLoginModal()">
       <fa-icon [icon]="faUser"></fa-icon>
       <span>Inloggen</span>
     </button>
-    <button #hamburgerBtn type="button" class="rounded-full hamburger" (click)="hamburgerClick($event)">
+    <button #hamburgerBtn type="button" class="rounded-full hamburger md:hidden" (click)="hamburgerClick($event)">
       <span class="hamburger-top"></span>
       <span class="hamburger-middle"></span>
       <span class="hamburger-bottom"></span>
     </button>
   </div>
 </div>
-
+<div #loginModal
+     class="fixed inset-0 z-20 h-full w-full bg-gray-900 opacity-80 flex flex-col justify-center items-center hidden">
+  <div class="flex flex-row justify-center font-inter md:flex-row bg-orange-500 p-4 m-4 rounded-xl z-30 opacity-100">
+    <div class="flex flex-col justify-center md:flex-row bg-orange-500 p-4 m-4">
+      <div id="loginField" class="">
+        <form #loginForm action="" class="flex flex-col justify-center gap-2">
+          <div class="flex justify-center items-center flex-row gap-4 m-2">
+            <label class="w-24" for="username">Username</label>
+            <input class="border-2 outline-none rounded-lg p-1 focus:border-2 focus:border-orange-500 invalid:border-red-500 w-48" id="username" type="text"/>
+          </div>
+          <div class="flex justify-center items-center flex-row gap-4 m-2">
+            <label class="w-24" for="password">Password</label>
+            <input class="border-2 outline-none rounded-lg p-1 focus:border-2 focus:border-orange-500 invalid:border-red-500 w-48" id="password" type="password"/>
+          </div>
+          <button type="submit" class="bg-orange-500 mx-auto my-2 rounded-xl flex justify-start items-center gap-4 py-2 pl-10 text-white hover:bg-orange-600 w-44 border-2 border-white">
+            <fa-icon [icon]="faUserSolid" class=""></fa-icon>
+            <span>Login</span>
+          </button>
+        </form>
+      </div>
+      <div id="horizontal-divider" class="flex py-5 items-center mx-2 md:hidden">
+        <div class="flex-grow border border-gray-200"></div>
+        <span class="flex-shrink mx-4 text-white font-extrabold">OR</span>
+        <div class="flex-grow border border-gray-200"></div>
+      </div>
+      <div id="vertical-divider" class="md:flex flex-col py-5 items-center hidden">
+        <div class="flex-grow border border-gray-200"></div>
+        <span class="flex-shrink mx-4 text-white font-extrabold">OR</span>
+        <div class="flex-grow border border-gray-200"></div>
+      </div>
+      <div id="signupField" class="flex justify-center items-center">
+        <button type="button" routerLink="/register" class="bg-orange-500 mx-auto rounded-xl flex justify-start items-center gap-4 py-2 pl-10 text-white hover:bg-orange-600 w-44 border-2 border-white">
+          <fa-icon [icon]="faUserPlus" class=""></fa-icon>
+          <span>Sign Up</span>
+        </button>
+      </div>
+    </div>
+    <div class="group w-10 h-10 rounded-full">
+      <button (click)="toggleLoginModal()" class="rounded-full bg-orange-500 border-2 border-white w-10 h-10 group-hover:bg-white">
+        <span class="bg-clip-text text-transparent bg-white group-hover:bg-orange-500 font-extrabold">X</span>
+      </button>
+    </div>
+  </div>
+</div>

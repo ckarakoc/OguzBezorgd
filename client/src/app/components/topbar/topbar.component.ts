@@ -33,6 +33,8 @@ export class TopbarComponent {
 
   private openLogin = signal<boolean>(false);
   hiddenClassLoginModal = computed(() => this.openLogin() ? '' : 'hidden')
+  // todo: sticky top bar? needed?
+  // fixedClassTopbar = computed(() => this.openBurger() ? 'fixed' : '')
 
   private breakpointService = inject(BreakpointService);
 
@@ -42,9 +44,7 @@ export class TopbarComponent {
       if (this.openBurger()) {
         this.openBurger.set(false);
       }
-      if (this.openLogin()){
-        this.openLogin.set(false);
-      }
+      // if (this.openLogin()) { this.openLogin.set(false); }
     }
   }
 

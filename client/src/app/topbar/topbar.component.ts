@@ -1,9 +1,9 @@
-import { Component, ElementRef, HostListener, inject, OnDestroy, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, inject, OnDestroy, viewChild } from '@angular/core';
 import { FaIconComponent } from "@fortawesome/angular-fontawesome";
 import { FormsModule } from "@angular/forms";
 import { NgOptimizedImage } from "@angular/common";
 import { RouterLink } from "@angular/router";
-import { faTruck, faShop, faUser as faUserSolid, faUserPlus } from '@fortawesome/free-solid-svg-icons';
+import { faShop, faTruck, faUser as faUserSolid, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import { faUser } from '@fortawesome/free-regular-svg-icons/faUser';
 import { BreakpointService } from '../services/breakpoint.service';
 
@@ -27,30 +27,30 @@ export class TopbarComponent implements OnDestroy {
   protected readonly faUserSolid = faUserSolid;
   protected readonly faUserPlus = faUserPlus;
 
-  @ViewChild('hamburgerBtn') hamburger!: ElementRef<HTMLButtonElement>;
-  @ViewChild('hamburgerMenu') hamburgerMenu!: ElementRef<HTMLDivElement>;
-  @ViewChild('loginModal') loginModal!: ElementRef<HTMLDivElement>;
-  @ViewChild('loginButton') loginBtn!: ElementRef<HTMLButtonElement>;
+  private hamburger = viewChild.required<ElementRef<HTMLButtonElement>>('hamburgerBtn');
+  private hamburgerMenu = viewChild.required<ElementRef<HTMLDivElement>>('hamburgerMenu');
+  private loginModal = viewChild.required<ElementRef<HTMLDivElement>>('loginModal');
+  private loginBtn = viewChild.required<ElementRef<HTMLButtonElement>>('loginButton');
 
   private breakpointService = inject(BreakpointService);
 
   @HostListener('window:resize', ['$event.target.innerWidth'])
   onResize(width: number) {
     if (width > this.breakpointService.getBreakpoint('md')) {
-      if (this.hamburger.nativeElement.classList.contains('open')) {
+      if (this.hamburger().nativeElement.classList.contains('open')) {
         this.toggleBurgerClickDiv();
       }
     }
   }
 
   toggleBurgerClickDiv(): void {
-    this.hamburger.nativeElement.classList.toggle('open');
-    this.hamburgerMenu.nativeElement.classList.toggle('hidden');
-    this.loginBtn.nativeElement.classList.toggle('hidden');
+    this.hamburger().nativeElement.classList.toggle('open');
+    this.hamburgerMenu().nativeElement.classList.toggle('hidden');
+    this.loginBtn().nativeElement.classList.toggle('hidden');
   }
 
   ngOnDestroy(): void {
-    if (this.hamburger.nativeElement.classList.contains('open')) {
+    if (this.hamburger().nativeElement.classList.contains('open')) {
       this.toggleBurgerClickDiv();
     }
   }
@@ -60,7 +60,7 @@ export class TopbarComponent implements OnDestroy {
   }
 
   toggleLoginModal(event: Event) {
-    this.loginModal.nativeElement.classList.toggle('hidden');
+    this.loginModal().nativeElement.classList.toggle('hidden');
   }
 
 }

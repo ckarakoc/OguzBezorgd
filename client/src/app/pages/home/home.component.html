@@ -30,6 +30,11 @@
 
 <!-- Triple -->
 <div class="pb-32">
+  <div class="flex flex-col justify-center items-center mb-20">
+    <span class="text-base md:text-3xl">Zo werkt het</span>
+    <span class="text-xl md:text-6xl font-extrabold text-orange-500">Makkelijker kan haast niet.</span>
+  </div>
+
   <div class="container relative mx-auto flex flex-col items-start px-6 md:space-x-7 md:flex-row">
     <!-- Line -->
     <div class="absolute top-32 left-16 hidden h-3 w-10/12 bg-orange-500 md:block"></div>
@@ -58,4 +63,35 @@
       <app-box [count]="count" [title]="data.title" [content]="data.content" [svgPath]="data.svg"/>
     }
   </div>
+</div>
+
+<!-- Download App Section  -->
+<div class="flex flex-col w-full bg-cyan-100 pt-16">
+  <div class="flex flex-col justify-center mx-auto gap-1 my-5 md:hidden">
+    <h1>Download de app</h1>
+    <h3 class="text-gray-800">Klik, ga lekker zitten en geniet.</h3>
+  </div>
+  <div class="flex flex-row justify-center xl:justify-evenly items-center w-full">
+    <!-- Badges -->
+    <div class="flex flex-col">
+      <div class="md:flex flex-col justify-center gap-1 my-5 hidden">
+        <h1>Download de app</h1>
+        <h3 class="text-gray-800">Klik, ga lekker zitten en geniet.</h3>
+      </div>
+      <div class="flex flex-col items-center space-x-0 space-y-4 md:flex-row md:space-y-0 md:space-x-4">
+        <a href="https://play.google.com">
+          <img class="h-auto w-32" src="assets/images/google-play-badge.png" alt="google badge">
+        </a>
+        <a href="https://apps.apple.com/">
+          <img class="h-auto w-32" src="assets/images/apple_badge.svg" alt="apple badge">
+        </a>
+      </div>
+    </div>
+    <img class="w-32 md:w-40 xl:w-80" src="assets/images/mobile-app-on-phone.png" alt="phone">
+  </div>
+</div>
+
+
+<div class="bg-black h-96">
+  <!-- todo footer -->
 </div>

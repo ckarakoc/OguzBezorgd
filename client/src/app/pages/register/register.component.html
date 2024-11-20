@@ -1,4 +1,4 @@
-<form [formGroup]="registerForm" (ngSubmit)="register()" class="flex h-screen flex-col items-center justify-center gap-1 bg-blue-500 [&>label]:text-white">
+<form [formGroup]="registerForm" (ngSubmit)="register()" class="flex h-screen flex-col items-center justify-center gap-1 bg-orange-500 [&>label]:text-white">
   <label for="userName">UserName</label>
   <input id="userName" type="text" formControlName="userName">
 
@@ -22,7 +22,7 @@
     <input id="zipCode" type="text" formControlName="zipCode">
   </div>
 
-  <button type="submit">Submit</button>
+  <button class="font-bold text-white border-2 border-white rounded-xl px-4 py-1" type="submit">Submit</button>
   <!-- <button label="Register" type="submit" [link]="true"> -->
 </form>
 

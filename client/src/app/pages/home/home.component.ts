@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { TopbarComponent } from '../../topbar/topbar.component';
-import { BoxComponent } from '../../box/box.component';
+import { TopbarComponent } from '../../components/topbar/topbar.component';
+import { BoxComponent } from '../../components/box/box.component';
 
 
 @Component({

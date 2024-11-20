@@ -16,11 +16,11 @@
     </button>
     <button #loginButton
             type="button" class="flex flex-row items-center justify-center gap-2 rounded-full p-3 font-jetbrains-mono hover:bg-zinc-900 hover:bg-opacity-5"
-            (click)="toggleLoginModal($event)">
+            (click)="loginClick($event)">
       <fa-icon [icon]="faUser"></fa-icon>
       <span class="hidden md:block">Inloggen</span>
     </button>
-    <button #hamburgerBtn type="button" class="rounded-full hamburger md:hidden z-30" (click)="hamburgerClick($event)">
+    <button #hamburgerBtn type="button" class="rounded-full hamburger md:hidden z-30 {{ openClassBurger() }} " (click)="hamburgerClick($event)">
       <span class="hamburger-top"></span>
       <span class="hamburger-middle"></span>
       <span class="hamburger-bottom"></span>
@@ -28,9 +28,10 @@
   </div>
 </div>
 
+@defer (on interaction(hamburgerBtn)) {
 <!-- Hamburger Menu -->
 <div #hamburgerMenu
-     class="fixed inset-0 z-20 h-full w-full flex justify-center text-white uppercase md:hidden hidden">
+     class="fixed inset-0 z-20 h-full w-full flex justify-center text-white uppercase md:hidden {{ hiddenClassBurgerMenu() }}">
 
   <!-- Hamburger Background -->
   <div class="absolute inset-0 bg-gray-900 opacity-80 z-10"></div>
@@ -58,10 +59,12 @@
     </div>
   </div>
 </div>
+}
 
+@defer (on interaction(loginButton)) {
 <!-- Login Modal -->
 <div #loginModal
-     class="fixed inset-0 z-20 h-full w-full flex flex-col justify-center items-center hidden">
+     class="fixed inset-0 z-20 h-full w-full flex flex-col justify-center items-center {{ hiddenClassLoginModal() }}">
   <!-- Modal Background -->
   <div class="absolute inset-0 bg-gray-900 opacity-80 z-10"></div>
 
@@ -102,9 +105,10 @@
       </div>
     </div>
     <div class="group w-10 h-10 rounded-full">
-      <button (click)="toggleLoginModal($event)" class="rounded-full bg-orange-500 border-2 border-white w-10 h-10 group-hover:bg-white">
+      <button (click)="loginClick($event)" class="rounded-full bg-orange-500 border-2 border-white w-10 h-10 group-hover:bg-white">
         <span class="bg-clip-text text-transparent bg-white group-hover:bg-orange-500 font-extrabold">X</span>
       </button>
     </div>
   </div>
 </div>
+}

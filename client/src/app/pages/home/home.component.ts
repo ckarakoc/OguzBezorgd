@@ -1,7 +1,7 @@
-import { Component, ElementRef, HostListener, inject, OnDestroy, OnInit, ViewChild, viewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { BreakpointService } from '../../services/breakpoint.service';
 import { TopbarComponent } from '../../topbar/topbar.component';
+import { BoxComponent } from '../../box/box.component';
 
 
 @Component({
@@ -9,7 +9,8 @@ import { TopbarComponent } from '../../topbar/topbar.component';
   standalone: true,
   imports: [
     ReactiveFormsModule,
-    TopbarComponent
+    TopbarComponent,
+    BoxComponent
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'

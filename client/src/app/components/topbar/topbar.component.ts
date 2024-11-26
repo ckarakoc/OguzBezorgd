@@ -1,11 +1,12 @@
 import { Component, computed, HostListener, inject, signal } from '@angular/core';
 import { FaIconComponent } from "@fortawesome/angular-fontawesome";
-import { FormsModule } from "@angular/forms";
+import { FormBuilder, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { NgOptimizedImage } from "@angular/common";
 import { RouterLink } from "@angular/router";
 import { faShop, faTruck, faUser as faUserSolid, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import { faUser } from '@fortawesome/free-regular-svg-icons/faUser';
 import { BreakpointService } from '../../services/breakpoint.service';
+import { AuthService } from '../../services/auth.service';
 
 
 @Component({
@@ -16,6 +17,7 @@ import { BreakpointService } from '../../services/breakpoint.service';
     NgOptimizedImage,
     RouterLink,
     FaIconComponent,
+    ReactiveFormsModule,
   ],
   templateUrl: './topbar.component.html',
   styleUrl: './topbar.component.css'
@@ -27,6 +29,10 @@ export class TopbarComponent {
   protected readonly faUserSolid = faUserSolid;
   protected readonly faUserPlus = faUserPlus;
 
+  private authService: AuthService = inject(AuthService);
+  private breakpointService = inject(BreakpointService);
+  private formBuilder = inject(FormBuilder);
+
   private openBurger = signal<boolean>(false);
   openClassBurger = computed(() => this.openBurger() ? 'open' : '')
   hiddenClassBurgerMenu = computed(() => this.openBurger() ? '' : 'hidden')
@@ -36,7 +42,19 @@ export class TopbarComponent {
   // todo: sticky top bar? needed?
   // fixedClassTopbar = computed(() => this.openBurger() ? 'fixed' : '')
 
-  private breakpointService = inject(BreakpointService);
+  loginForm = this.formBuilder.group({
+    username: [''],
+    password: ['']
+  })
+
+  login() {
+    let username = 'superuser';
+    let password = 'Pa$$w0rd';
+    console.log(this.loginForm.value);
+    // todo: safe the accessToken in localStorage and refreshToken in HttpOnlyCookie
+    let response = this.authService.login({ username: username, password: password }).subscribe((value) => console.log(value));
+    console.log(response);
+  }
 
   @HostListener('window:resize', ['$event.target.innerWidth'])
   onResize(width: number) {
@@ -47,6 +65,7 @@ export class TopbarComponent {
       // if (this.openLogin()) { this.openLogin.set(false); }
     }
   }
+
 
   hamburgerClick = (event: Event) => {
     this.openBurger.update(value => !value);

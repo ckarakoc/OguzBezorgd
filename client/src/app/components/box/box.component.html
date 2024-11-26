@@ -2,12 +2,12 @@
 <div [class.mt-24]="count() !== 0"
      class="{{ twMT }} group relative flex flex-col rounded-lg bg-white p-6 space-y-6 w-full md:min-h-72 border-2 border-orange-500 hover:border-orange-600">
   <div class="absolute -top-10 left-1/2 -ml-10 md:left-16">
-    <div class="flex h-20 w-20 items-center justify-center rounded-full p-4 bg-orange-500 group-hover:bg-orange-600">
+    <div class="flex h-20 w-20 items-center justify-center rounded-full bg-orange-500 p-4 group-hover:bg-orange-600">
       <img src="{{ svgPath() }}" alt="Box icon">
     </div>
   </div>
   <h5 class="pt-6 text-center text-xl font-bold md:text-left"> {{ title() }} </h5>
-  <p class="text-center text-gray-400 md:text-left group-hover:text-black">
+  <p class="text-center text-gray-400 group-hover:text-black md:text-left">
     {{ content() }}
   </p>
 </div>

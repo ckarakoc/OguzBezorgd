@@ -1,38 +1,38 @@
 <app-topbar></app-topbar>
 
 <!-- Content -->
-<div class="flex flex-col xl:flex-row w-full font-inter mb-10 md:h-3/5 md:mb-20">
+<div class="mb-10 flex w-full flex-col font-inter md:mb-20 md:h-3/5 xl:flex-row">
   <!-- Upper part -->
-  <div class="flex flex-col justify-center items-center h-1/4 xl:h-full bg-gray-100 xl:basis-1/2">
-    <div class="flex flex-col items-start gap-1 m-10">
+  <div class="flex h-1/4 flex-col items-center justify-center bg-gray-100 xl:h-full xl:basis-1/2">
+    <div class="m-10 flex flex-col items-start gap-1">
       <h1 class="text-gray-800">Bestel eten en meer</h1>
       <h2 class="text-gray-600">Restaurants en boodschappen in de buurt</h2>
-      <div class="border border-black rounded-full focus-within:border-orange-500">
+      <div class="rounded-full border border-black focus-within:border-orange-500">
         <!-- Zoek input -->
         <input class="py-2 pl-2 pr-10 outline-none rounded-l-full peer border-l border-y border-white
         focus:border-y focus:border-y-orange-500 focus:border-l focus:border-l-orange-500" placeholder="Volledige adres" type="text"/>
 
         <button class="bg-white py-2 px-1 rounded-r-full border-y border-r border-y-white border-r-white
          peer-focus:border-y-orange-500 peer-focus:border-r-orange-500">
-          <span class="bg-orange-500 w-auto h-auto p-2 px-4 rounded-full font-bold text-white hover:bg-orange-600">Zoek</span>
+          <span class="h-auto w-auto rounded-full bg-orange-500 p-2 px-4 font-bold text-white hover:bg-orange-600">Zoek</span>
         </button>
       </div>
     </div>
   </div>
 
   <!-- Lower part -->
-  <div class="bg-gray-100 xl:basis-1/2 h-96 md:h-3/4 xl:h-full">
-    <div class="bigImg bg-orange-500 object-contain w-full h-full flex justify-center items-center">
-      <img class="object-contain w-full h-1/2" src="assets/images/oguz_bezorgd_content2.png" alt="">
+  <div class="h-96 bg-gray-100 md:h-3/4 xl:h-full xl:basis-1/2">
+    <div class="flex h-full w-full items-center justify-center bg-orange-500 object-contain bigImg">
+      <img class="h-1/2 w-full object-contain" src="assets/images/oguz_bezorgd_content2.png" alt="">
     </div>
   </div>
 </div>
 
 <!-- Triple -->
 <div class="flex flex-col justify-start pb-32">
-  <div class="flex flex-col justify-center items-center mb-20">
+  <div class="mb-20 flex flex-col items-center justify-center">
     <span class="text-base md:text-3xl">Zo werkt het</span>
-    <span class="text-xl md:text-6xl font-extrabold text-orange-500">Makkelijker kan haast niet.</span>
+    <span class="text-xl font-extrabold text-orange-500 md:text-6xl">Makkelijker kan haast niet.</span>
   </div>
 
   <div class="container relative mx-auto flex flex-col items-start px-6 md:space-x-7 md:flex-row">
@@ -60,25 +60,26 @@
 
     @for (data of boxData; track $index) {
       @let count = $index * 8;
+      <!-- todo: bug md:mt-8 and md:mt-16 doesn't work as supposed to -->
       <app-box [count]="count" [title]="data.title" [content]="data.content" [svgPath]="data.svg"/>
     }
   </div>
 </div>
 
 <!-- Download App Section  -->
-<div class="flex flex-col w-full bg-cyan-100 pt-16">
-  <div class="flex flex-col justify-center mx-auto gap-1 my-5 md:hidden">
+<div class="flex w-full flex-col bg-cyan-100 pt-16">
+  <div class="mx-auto my-5 flex flex-col justify-center gap-1 md:hidden">
     <h1>Download de app</h1>
     <h3 class="text-gray-800">Klik, ga lekker zitten en geniet.</h3>
   </div>
-  <div class="flex flex-row justify-center xl:justify-evenly items-center w-full">
+  <div class="flex w-full flex-row items-center justify-center xl:justify-evenly">
     <!-- Badges -->
     <div class="flex flex-col">
-      <div class="md:flex flex-col justify-center gap-1 my-5 hidden">
+      <div class="my-5 hidden flex-col justify-center gap-1 md:flex">
         <h1>Download de app</h1>
         <h3 class="text-gray-800">Klik, ga lekker zitten en geniet.</h3>
       </div>
-      <div class="flex flex-col items-center space-x-0 space-y-4 md:flex-row md:space-y-0 md:space-x-4">
+      <div class="flex flex-col items-center space-x-0 space-y-4 md:space-y-0 md:space-x-4 md:flex-row">
         <a href="https://play.google.com">
           <img class="h-auto w-32" src="assets/images/google-play-badge.png" alt="google badge">
         </a>
@@ -92,6 +93,6 @@
 </div>
 
 
-<div class="bg-black h-96">
+<div class="h-96 bg-black">
   <!-- todo footer -->
 </div>

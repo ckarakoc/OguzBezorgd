@@ -10,10 +10,10 @@ export class AuthService {
   private http: HttpClient = inject(HttpClient);
 
   login(model: any) {
-    return this.http.post<User>(`${ env.apiUrl }/auth/login`, model)
+    return this.http.post<User>(`${ env.apiUrl }/auth/login`, model);
   }
 
   register(model: any) {
-    return this.http.post<User>(`${ env.apiUrl }/auth/register`, model)
+    return this.http.post<User>(`${ env.apiUrl }/auth/register`, model);
   }
 }

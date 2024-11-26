@@ -1,16 +1,16 @@
 <!-- Top Bar -->
 <div class="flex h-20 w-full items-center justify-between bg-gradient-to-r from-orange-50 to-orange-500 p-3 shadow-2xl topbar from-60%">
-  <div class="logo z-30">
+  <div class="z-30 logo">
     <a href="#" class="">
       <img ngSrc="/assets/images/oguz_logo.png" class="" alt="Logo" width="170" height="32" priority/>
     </a>
   </div>
   <div class="flex flex-row items-center justify-center gap-4">
-    <button type="button" class="hidden md:flex flex-row items-center justify-center gap-2 rounded-full p-3 font-jetbrains-mono hover:bg-zinc-900 hover:bg-opacity-5">
+    <button type="button" class="hidden flex-row items-center justify-center gap-2 rounded-full p-3 font-jetbrains-mono hover:bg-zinc-900 hover:bg-opacity-5 md:flex">
       <fa-icon [icon]="faTruck"></fa-icon>
       <span>Word bezorger</span>
     </button>
-    <button type="button" class="hidden md:flex flex-row items-center justify-center gap-2 rounded-full p-3 font-jetbrains-mono hover:bg-zinc-900 hover:bg-opacity-5">
+    <button type="button" class="hidden flex-row items-center justify-center gap-2 rounded-full p-3 font-jetbrains-mono hover:bg-zinc-900 hover:bg-opacity-5 md:flex">
       <fa-icon [icon]="faShop"></fa-icon>
       <span>Word partner</span>
     </button>
@@ -34,25 +34,25 @@
        class="fixed inset-0 z-20 h-full w-full flex justify-center text-white uppercase md:hidden {{ hiddenClassBurgerMenu() }}">
 
     <!-- Hamburger Background -->
-    <div class="absolute inset-0 bg-gray-900 opacity-80 z-10"></div>
+    <div class="absolute inset-0 z-10 bg-gray-900 opacity-80"></div>
 
     <!-- Hamburger Content -->
-    <div class="flex flex-col inset-0  h-full w-full  justify-center text-white uppercase divide-y-2 divide-gray-300 px-16 z-20">
+    <div class="inset-0 z-20 flex h-full w-full flex-col justify-center px-16 uppercase text-white divide-y-2 divide-gray-300">
       <div class="w-full py-3 text-center">
-        <a routerLink="/deliverer" fragment="features" class="block text-orange-500 hover:text-orange-600 font-extrabold">Word bezorger</a>
+        <a routerLink="/deliverer" fragment="features" class="block font-extrabold text-orange-500 hover:text-orange-600">Word bezorger</a>
       </div>
       <div class="w-full py-3 text-center">
-        <a routerLink="/partner" fragment="download" class="block text-orange-500 hover:text-orange-600 font-extrabold">Word partner</a>
+        <a routerLink="/partner" fragment="download" class="block font-extrabold text-orange-500 hover:text-orange-600">Word partner</a>
       </div>
       <div class="w-full py-3 text-center">
-        <a routerLink="/customer" class="block text-orange-500 hover:text-orange-600 font-extrabold">Word Klant</a>
+        <a routerLink="/customer" class="block font-extrabold text-orange-500 hover:text-orange-600">Word Klant</a>
       </div>
       <div class="flex flex-row gap-3 pt-4">
-        <button type="button" routerLink="/login" class="bg-orange-500 mx-auto rounded-xl flex justify-start items-center gap-4 py-2 pl-6 text-white hover:bg-orange-600 w-52 border-2 border-white">
+        <button type="button" routerLink="/login" class="mx-auto flex w-52 items-center justify-start gap-4 rounded-xl border-2 border-white bg-orange-500 py-2 pl-6 text-white hover:bg-orange-600">
           <fa-icon [icon]="faUserSolid" class=""></fa-icon>
           <span>Inloggen</span>
         </button>
-        <button type="button" routerLink="/register" class="bg-orange-500 mx-auto rounded-xl flex justify-start items-center gap-4 py-2 pl-6 text-white hover:bg-orange-600 w-52 border-2 border-white">
+        <button type="button" routerLink="/register" class="mx-auto flex w-52 items-center justify-start gap-4 rounded-xl border-2 border-white bg-orange-500 py-2 pl-6 text-white hover:bg-orange-600">
           <fa-icon [icon]="faUserPlus" class=""></fa-icon>
           <span>Registreren</span>
         </button>
@@ -66,47 +66,47 @@
   <div #loginModal
        class="fixed inset-0 z-20 h-full w-full flex flex-col justify-center items-center {{ hiddenClassLoginModal() }}">
     <!-- Modal Background -->
-    <div class="absolute inset-0 bg-gray-900 opacity-80 z-10"></div>
+    <div class="absolute inset-0 z-10 bg-gray-900 opacity-80"></div>
 
     <!-- Modal Content -->
-    <div class="flex flex-row justify-center font-inter md:flex-row bg-orange-500 p-4 m-4 rounded-xl z-30">
-      <div class="flex flex-col justify-center md:flex-row bg-orange-500 p-4 m-4">
+    <div class="z-30 m-4 flex flex-row justify-center rounded-xl bg-orange-500 p-4 font-inter md:flex-row">
+      <div class="m-4 flex flex-col justify-center bg-orange-500 p-4 md:flex-row">
         <div id="loginField" class="">
-          <form #loginForm action="" class="flex flex-col justify-center gap-2">
-            <div class="flex justify-center items-center flex-row gap-4 m-2">
+          <form [formGroup]="loginForm" (ngSubmit)="login()" class="flex flex-col justify-center gap-2">
+            <div class="m-2 flex flex-row items-center justify-center gap-4">
               <label class="w-32 text-white" for="username">Gebruikersnaam</label>
-              <input class="border-2 outline-none rounded-lg p-1 focus:border-2 focus:border-orange-500 invalid:border-red-500 w-48" id="username" type="text"/>
+              <input class="w-48 rounded-lg border-2 invalid:border-red-500 p-1 outline-none focus:border-2 focus:border-orange-500" id="username" type="text"/>
             </div>
-            <div class="flex justify-center items-center flex-row gap-4 m-2">
+            <div class="m-2 flex flex-row items-center justify-center gap-4">
               <label class="w-32 text-white" for="password">Wachtwoord</label>
-              <input class="border-2 outline-none rounded-lg p-1 focus:border-2 focus:border-orange-500 invalid:border-red-500 w-48" id="password" type="password"/>
+              <input class="w-48 rounded-lg border-2 invalid:border-red-500 p-1 outline-none focus:border-2 focus:border-orange-500" id="password" type="password"/>
             </div>
-            <button type="submit" class="bg-orange-500 mx-auto my-2 rounded-xl flex justify-start items-center gap-4 py-2 pl-10 text-white hover:bg-orange-600 w-52 border-2 border-white">
+            <button type="submit" class="mx-auto my-2 flex w-52 items-center justify-start gap-4 rounded-xl border-2 border-white bg-orange-500 py-2 pl-10 text-white hover:bg-orange-600">
               <fa-icon [icon]="faUserSolid" class=""></fa-icon>
               <span>Inloggen</span>
             </button>
           </form>
         </div>
-        <div id="horizontal-divider" class="flex py-5 items-center mx-2 md:hidden">
+        <div id="horizontal-divider" class="mx-2 flex items-center py-5 md:hidden">
           <div class="flex-grow border border-gray-200"></div>
-          <span class="flex-shrink mx-4 text-white font-extrabold">OR</span>
-          <div class="flex-grow border border-gray-200"></div>
-        </div>
-        <div id="vertical-divider" class="md:flex flex-col py-5 items-center hidden">
-          <div class="flex-grow border border-gray-200"></div>
-          <span class="flex-shrink mx-4 text-white font-extrabold">OR</span>
+          <span class="mx-4 flex-shrink font-extrabold text-white">OR</span>
           <div class="flex-grow border border-gray-200"></div>
         </div>
-        <div id="signupField" class="flex justify-center items-center">
-          <button type="button" routerLink="/register" class="bg-orange-500 mx-auto rounded-xl flex justify-start items-center gap-4 py-2 pl-10 text-white hover:bg-orange-600 w-52 border-2 border-white">
+        <div id="vertical-divider" class="hidden flex-col items-center py-5 md:flex">
+          <div class="flex-grow border border-gray-200"></div>
+          <span class="mx-4 flex-shrink font-extrabold text-white">OR</span>
+          <div class="flex-grow border border-gray-200"></div>
+        </div>
+        <div id="signupField" class="flex items-center justify-center">
+          <button type="button" routerLink="/register" class="mx-auto flex w-52 items-center justify-start gap-4 rounded-xl border-2 border-white bg-orange-500 py-2 pl-10 text-white hover:bg-orange-600">
             <fa-icon [icon]="faUserPlus" class=""></fa-icon>
             <span>Registreren</span>
           </button>
         </div>
       </div>
-      <div class="group w-10 h-10 rounded-full">
-        <button (click)="loginClick($event)" class="rounded-full bg-orange-500 border-2 border-white w-10 h-10 group-hover:bg-white">
-          <span class="bg-clip-text text-transparent bg-white group-hover:bg-orange-500 font-extrabold">X</span>
+      <div class="h-10 w-10 rounded-full group">
+        <button (click)="loginClick($event)" class="h-10 w-10 rounded-full border-2 border-white bg-orange-500 group-hover:bg-white">
+          <span class="bg-white bg-clip-text font-extrabold text-transparent group-hover:bg-orange-500">X</span>
         </button>
       </div>
     </div>

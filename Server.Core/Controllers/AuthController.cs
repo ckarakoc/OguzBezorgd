@@ -29,6 +29,7 @@ public class AuthController(
     [HttpPost("login")]
     public async Task<ActionResult<LoginResponseDto>> Login(LoginDto loginDto)
     {
+        //todo: write tests
         var userName = loginDto.UserName;
         var password = loginDto.Password;
 
@@ -37,21 +38,29 @@ public class AuthController(
         {
             return BadRequest("No user found");
         }
-        
+
         var result = await signInManager.CheckPasswordSignInAsync(user, password, false);
         if (!result.Succeeded)
         {
             return Unauthorized(result);
         }
 
+        signInManager.IsSignedIn(User);
+
         Log.Information("User {@user} logged in", user);
+
+        var accessToken = await tokenService.GenerateTokenAsync(user, DateTime.UtcNow.AddMinutes(15));
+        var refreshToken = await tokenService.GenerateTokenAsync(user, DateTime.UtcNow.AddDays(90));
+
+        await userManager.SetAuthenticationTokenAsync(user, "OguzBezorgd", "RefreshToken", refreshToken);
 
         return Ok(new LoginResponseDto
         {
             UserName = user.UserName,
             Email = user.Email,
             PhoneNumber = user.PhoneNumber,
-            Token = await tokenService.GenerateTokenAsync(user)
+            AccessToken = accessToken,
+            RefreshToken = refreshToken
         });
     }
 
@@ -61,9 +70,16 @@ public class AuthController(
     /// <param name="token"></param> 
     /// <returns></returns>
     [HttpPost("logout")]
-    public async Task<ActionResult> Logout([FromBody] string token)
+    public async Task<ActionResult> Logout(AuthUserDto authUserDto)
     {
-        await signInManager.SignOutAsync();
+        var user = await userManager.FindByNameAsync(authUserDto.UserName);
+        if (user == null)
+        {
+            return BadRequest("No user found");
+        }
+
+        await userManager.RemoveAuthenticationTokenAsync(user, "OguzBezorgd", "RefreshToken");
+
         return Ok("Logged out");
     }
 
@@ -87,14 +103,14 @@ public class AuthController(
 
         var user = mapper.Map<User>(registerDto);
         var result = await userManager.CreateAsync(user, registerDto.Password);
-        Log.Information("User {@user} registered", user);
-
-        await userManager.AddToRoleAsync(user, registerDto.Role);
-        Log.Information("Roles of user: {@roles} ", await userManager.GetRolesAsync(user));
         if (!result.Succeeded)
         {
             return BadRequest(result.Errors);
         }
+        Log.Information("User {@user} registered", user);
+        
+        await userManager.AddToRoleAsync(user, registerDto.Role);
+        Log.Information("Roles of user: {@roles} ", await userManager.GetRolesAsync(user));
 
         return CreatedAtAction(nameof(UsersController.GetUserById), "Users", new {userId = user.Id}, user);
     }
@@ -105,10 +121,31 @@ public class AuthController(
     /// <param name="token"></param>
     /// <returns></returns>
     [HttpPost("refresh")]
-    public async Task<ActionResult> Refresh([FromBody] string token)
+    public async Task<ActionResult> Refresh(AuthUserDto userDto, string token)
     {
-        
-        return Ok();
+        var user = await userManager.FindByNameAsync(userDto.UserName);
+        if (user == null)
+        {
+            return BadRequest("No user found");
+        }
+
+        // check refresh token is in the DB
+        var storedRefreshToken = await userManager.GetAuthenticationTokenAsync(user, "OguzBezorgd", "RefreshToken");
+        if (storedRefreshToken == null || storedRefreshToken != token)
+        {
+            return Unauthorized("Invalid refresh token.");
+        }
+
+        // check if the token is verified
+        var valid = await tokenService.CheckTokenIsValid(token);
+        if (!valid)
+        {
+            return BadRequest("Invalid token");
+        }
+
+        // generate new access token
+        var accessToken = await tokenService.GenerateTokenAsync(user, DateTime.UtcNow.AddMinutes(15));
+        return Ok(new {accessToken});
     }
 
     private async Task<bool> UserExist(string username)

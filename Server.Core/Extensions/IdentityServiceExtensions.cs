@@ -18,7 +18,10 @@ public static class IdentityServiceExtensions
             .AddRoles<IdentityRole<int>>()
             .AddRoleManager<RoleManager<IdentityRole<int>>>()
             .AddEntityFrameworkStores<DataContext>()
-            .AddSignInManager<SignInManager<User>>();
+            .AddSignInManager<SignInManager<User>>()
+            .AddDefaultTokenProviders()
+            .AddTokenProvider<DataProtectorTokenProvider<User>>("OguzBezorgd");
+            
 
         services.Configure<IdentityOptions>(options =>
         {
@@ -55,7 +58,6 @@ public static class IdentityServiceExtensions
 
                     options.Events = new JwtBearerEvents
                     {
-                        
                     };
                 }
             );

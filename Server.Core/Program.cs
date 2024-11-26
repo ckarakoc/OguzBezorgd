@@ -8,8 +8,7 @@ using Server.Core.Extensions;
 var builder = WebApplication.CreateBuilder(args);
 
 // Logging
-builder.Host.UseSerilog((context, loggerConfig) => { loggerConfig.ReadFrom.Configuration(context.Configuration); }
-);
+builder.Host.UseSerilog((context, loggerConfig) => { loggerConfig.ReadFrom.Configuration(context.Configuration); });
 var services = builder.Services;
 var config = builder.Configuration;
 

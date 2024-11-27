@@ -1,5 +1,4 @@
-﻿using System.Text.Json;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -80,9 +79,14 @@ public class AuthController(
     /// <param name="token"></param> 
     /// <returns></returns>
     [HttpPost("logout")]
-    public async Task<ActionResult> Logout(AuthUserDto authUserDto)
+    public async Task<ActionResult> Logout(string username)
     {
-        var user = await userManager.FindByNameAsync(authUserDto.UserName);
+        if (User.Identity.Name != username)
+        {
+            return Unauthorized();
+        }
+        
+        var user = await userManager.FindByNameAsync(username);
         if (user == null)
         {
             return BadRequest("No user found");
@@ -128,12 +132,13 @@ public class AuthController(
     /// <summary>
     /// Refresh the authentication token when it is close to expiring.
     /// </summary>
+    /// <param name="username"></param>
     /// <param name="token"></param>
     /// <returns></returns>
     [HttpPost("refresh")]
-    public async Task<ActionResult> Refresh(AuthUserDto userDto, string token)
+    public async Task<ActionResult> Refresh(string username, string token)
     {
-        var user = await userManager.FindByNameAsync(userDto.UserName);
+        var user = await userManager.FindByNameAsync(username);
         if (user == null)
         {
             return BadRequest("No user found");

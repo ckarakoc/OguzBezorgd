@@ -75,11 +75,11 @@
           <form [formGroup]="loginForm" (ngSubmit)="login()" class="flex flex-col justify-center gap-2">
             <div class="m-2 flex flex-row items-center justify-center gap-4">
               <label class="w-32 text-white" for="username">Gebruikersnaam</label>
-              <input class="w-48 rounded-lg border-2 invalid:border-red-500 p-1 outline-none focus:border-2 focus:border-orange-500" id="username" type="text"/>
+              <input formControlName="username" class="w-48 rounded-lg border-2 invalid:border-red-500 p-1 outline-none focus:border-2 focus:border-orange-500" id="username" type="text"/>
             </div>
             <div class="m-2 flex flex-row items-center justify-center gap-4">
               <label class="w-32 text-white" for="password">Wachtwoord</label>
-              <input class="w-48 rounded-lg border-2 invalid:border-red-500 p-1 outline-none focus:border-2 focus:border-orange-500" id="password" type="password"/>
+              <input formControlName="password" class="w-48 rounded-lg border-2 invalid:border-red-500 p-1 outline-none focus:border-2 focus:border-orange-500" id="password" type="password"/>
             </div>
             <button type="submit" class="mx-auto my-2 flex w-52 items-center justify-start gap-4 rounded-xl border-2 border-white bg-orange-500 py-2 pl-10 text-white hover:bg-orange-600">
               <fa-icon [icon]="faUserSolid" class=""></fa-icon>

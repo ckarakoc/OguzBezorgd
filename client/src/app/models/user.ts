@@ -5,4 +5,5 @@ export interface User {
     email: string;
     phoneNumber: string;
     addresses: UserAddress[];
+    accessToken: string;
 }

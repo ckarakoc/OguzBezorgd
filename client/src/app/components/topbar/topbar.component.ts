@@ -2,11 +2,12 @@ import { Component, computed, HostListener, inject, signal } from '@angular/core
 import { FaIconComponent } from "@fortawesome/angular-fontawesome";
 import { FormBuilder, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { NgOptimizedImage } from "@angular/common";
-import { RouterLink } from "@angular/router";
+import { Router, RouterLink } from "@angular/router";
 import { faShop, faTruck, faUser as faUserSolid, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import { faUser } from '@fortawesome/free-regular-svg-icons/faUser';
 import { BreakpointService } from '../../services/breakpoint.service';
 import { AuthService } from '../../services/auth.service';
+import { map } from 'rxjs';
 
 
 @Component({
@@ -29,6 +30,7 @@ export class TopbarComponent {
   protected readonly faUserSolid = faUserSolid;
   protected readonly faUserPlus = faUserPlus;
 
+  private router = inject(Router);
   private authService: AuthService = inject(AuthService);
   private breakpointService = inject(BreakpointService);
   private formBuilder = inject(FormBuilder);
@@ -43,16 +45,24 @@ export class TopbarComponent {
   // fixedClassTopbar = computed(() => this.openBurger() ? 'fixed' : '')
 
   loginForm = this.formBuilder.group({
-    username: [''],
-    password: ['']
+    username: ['superuser'],
+    password: ['Pa$$w0rd']
   })
 
   login() {
     let username = 'superuser';
     let password = 'Pa$$w0rd';
-    console.log(this.loginForm.value);
+    // console.log(this.loginForm.value);
     // todo: safe the accessToken in localStorage and refreshToken in HttpOnlyCookie
-    let response = this.authService.login({ username: username, password: password }).subscribe((value) => console.log(value));
+    let response = this.authService.login(this.loginForm.value).subscribe({
+      next: _ => {
+        console.log('login successful');
+        return this.router.navigateByUrl('/profile');
+      },
+      error: err => {
+        console.log('login failed ', err);
+      }
+    });
     console.log(response);
   }
 

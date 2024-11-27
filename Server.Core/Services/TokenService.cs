@@ -72,4 +72,15 @@ public class TokenService(IConfiguration config, UserManager<User> userManager) 
         var result = await tokenHandler.ValidateTokenAsync(token, validationParameters);
         return result.IsValid;
     }
+    
+    public string GenerateRefreshToken()
+    {
+        var randomNumber = new byte[32]; // 256-bit token
+        using (var rng = RandomNumberGenerator.Create())
+        {
+            rng.GetBytes(randomNumber);
+        }
+
+        return Convert.ToBase64String(randomNumber);
+    }
 }

@@ -21,7 +21,6 @@ public static class IdentityServiceExtensions
             .AddSignInManager<SignInManager<User>>()
             .AddDefaultTokenProviders()
             .AddTokenProvider<DataProtectorTokenProvider<User>>("OguzBezorgd");
-            
 
         services.Configure<IdentityOptions>(options =>
         {

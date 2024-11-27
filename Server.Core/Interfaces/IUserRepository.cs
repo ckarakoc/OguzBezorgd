@@ -19,6 +19,9 @@ public interface IUserRepository
     
     // Delete Operations
     void DeleteUser(User user);
-    
+
+    Task SaveRefreshToken(User user, string refreshToken, DateTime expiryDate);
+    Task DeleteRefreshToken(User user);
     Task SaveAsync();
+    Task<RefreshToken?> GetRefreshToken(User user);
 }

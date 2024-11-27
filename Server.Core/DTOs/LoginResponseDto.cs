@@ -9,5 +9,5 @@ public class LoginResponseDto
     public string? Email { get; set; }
     public string? PhoneNumber { get; set; }
     public string AccessToken { get; set; } = null!;
-    public string RefreshToken { get; set; } = null!;
+    public string? RefreshToken { get; set; } // can be null, as it is sent through HTTP-cookies
 }

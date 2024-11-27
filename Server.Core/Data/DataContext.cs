@@ -22,6 +22,7 @@ public class DataContext(DbContextOptions options)
     public DbSet<StoreAddress> StoreAddresses { get; set; }
     public DbSet<StoreProduct> StoreProducts { get; set; }
     public DbSet<UserAddress> UserAddresses { get; set; }
+    public DbSet<RefreshToken> RefreshTokens { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -56,5 +57,11 @@ public class DataContext(DbContextOptions options)
             .ToTable("StoreProducts");
         builder.Entity<UserAddress>()
             .ToTable("UserAddresses");
+        builder.Entity<RefreshToken>()
+            .ToTable("RefreshTokens")
+            .HasOne(r => r.User)
+            .WithOne(u => u.RefreshToken)
+            .HasForeignKey<RefreshToken>(r => r.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

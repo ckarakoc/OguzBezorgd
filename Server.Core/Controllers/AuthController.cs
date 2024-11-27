@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Text.Json;
+using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -13,6 +14,7 @@ public class AuthController(
     UserManager<User> userManager,
     SignInManager<User> signInManager,
     RoleManager<IdentityRole<int>> roleManager,
+    IUnitOfWork unitOfWork,
     ITokenService tokenService,
     IMapper mapper) : BaseApiController
 {
@@ -45,22 +47,30 @@ public class AuthController(
             return Unauthorized(result);
         }
 
-        signInManager.IsSignedIn(User);
-
         Log.Information("User {@user} logged in", user);
 
-        var accessToken = await tokenService.GenerateTokenAsync(user, DateTime.UtcNow.AddMinutes(15));
-        var refreshToken = await tokenService.GenerateTokenAsync(user, DateTime.UtcNow.AddDays(90));
+        var accessToken = await tokenService.GenerateTokenAsync(user, DateTime.UtcNow.AddDays(1));
+        // var accessToken = await tokenService.GenerateTokenAsync(user, DateTime.UtcNow.AddMinutes(15));
+        // var refreshToken = await tokenService.GenerateTokenAsync(user, DateTime.UtcNow.AddDays(90));
+        var refreshToken = tokenService.GenerateRefreshToken();
 
-        await userManager.SetAuthenticationTokenAsync(user, "OguzBezorgd", "RefreshToken", refreshToken);
+        // await userManager.SetAuthenticationTokenAsync(user, "OguzBezorgd", "RefreshToken", refreshToken);
+        unitOfWork.UserRepository.SaveRefreshToken(user, refreshToken, DateTime.UtcNow.AddDays(90));
+
+        Response.Cookies.Append("RefreshToken", refreshToken, new CookieOptions
+        {
+            HttpOnly = true,
+            Secure = false, // Ensures cookie is sent over HTTP for localhost
+            SameSite = SameSiteMode.Lax,
+            Expires = DateTimeOffset.UtcNow.AddDays(90)
+        });
 
         return Ok(new LoginResponseDto
         {
             UserName = user.UserName,
             Email = user.Email,
             PhoneNumber = user.PhoneNumber,
-            AccessToken = accessToken,
-            RefreshToken = refreshToken
+            AccessToken = accessToken
         });
     }
 
@@ -78,8 +88,7 @@ public class AuthController(
             return BadRequest("No user found");
         }
 
-        await userManager.RemoveAuthenticationTokenAsync(user, "OguzBezorgd", "RefreshToken");
-
+        await unitOfWork.UserRepository.DeleteRefreshToken(user);
         return Ok("Logged out");
     }
 
@@ -107,8 +116,9 @@ public class AuthController(
         {
             return BadRequest(result.Errors);
         }
+
         Log.Information("User {@user} registered", user);
-        
+
         await userManager.AddToRoleAsync(user, registerDto.Role);
         Log.Information("Roles of user: {@roles} ", await userManager.GetRolesAsync(user));
 
@@ -130,21 +140,14 @@ public class AuthController(
         }
 
         // check refresh token is in the DB
-        var storedRefreshToken = await userManager.GetAuthenticationTokenAsync(user, "OguzBezorgd", "RefreshToken");
-        if (storedRefreshToken == null || storedRefreshToken != token)
+        var refreshToken = await unitOfWork.UserRepository.GetRefreshToken(user);
+        if (refreshToken == null || refreshToken.Token != token || refreshToken.ExpiryDate <= DateTime.UtcNow)
         {
             return Unauthorized("Invalid refresh token.");
         }
 
-        // check if the token is verified
-        var valid = await tokenService.CheckTokenIsValid(token);
-        if (!valid)
-        {
-            return BadRequest("Invalid token");
-        }
-
         // generate new access token
-        var accessToken = await tokenService.GenerateTokenAsync(user, DateTime.UtcNow.AddMinutes(15));
+        var accessToken = await tokenService.GenerateTokenAsync(user, DateTime.UtcNow.AddDays(1));
         return Ok(new {accessToken});
     }
 

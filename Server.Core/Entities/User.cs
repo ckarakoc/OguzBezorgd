@@ -14,4 +14,5 @@ public class User : IdentityUser<int>
     public List<Order> Orders { get; set; } = []; // todo: nullable? only a 'Customer' can make orders
     public List<Store> Stores { get; set; } = []; // todo: nullable?  only a 'Partner' can make stores
     public List<UserAddress> Addresses { get; set; } = [];
+    public RefreshToken RefreshToken { get; set; } = null!;
 }

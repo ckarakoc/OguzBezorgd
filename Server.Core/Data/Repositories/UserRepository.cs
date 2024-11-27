@@ -40,6 +40,51 @@ public class UserRepository(DataContext context, IMapper mapper) : IUserReposito
         return user;
     }
 
+    public async Task SaveRefreshToken(User user, string refreshToken, DateTime expiryDate)
+    {
+        var existingToken = await context.RefreshTokens
+            .FirstOrDefaultAsync(rt => rt.UserId == user.Id);
+
+        if (existingToken != null)
+        {
+            // Update the existing token
+            existingToken.Token = refreshToken;
+            existingToken.ExpiryDate = expiryDate;
+        }
+        else
+        {
+            var token = new RefreshToken
+            {
+                User = user,
+                Token = refreshToken,
+                ExpiryDate = expiryDate
+            };
+            context.RefreshTokens.Add(token);
+        }
+
+        await SaveAsync();
+    }
+
+    public async Task<RefreshToken?> GetRefreshToken(User user)
+    {
+        var token = await context.RefreshTokens
+            .FirstOrDefaultAsync(rt => rt.UserId == user.Id);
+        return token;
+    }
+    
+    public async Task DeleteRefreshToken(User user)
+    {
+        var token = await context.RefreshTokens
+            .FirstOrDefaultAsync(rt => rt.UserId == user.Id);
+
+        if (token != null)
+        {
+            context.RefreshTokens.Remove(token);
+            await SaveAsync();
+        }
+    }
+
+
     public void UpdateUser(User user)
     {
         context.Entry(user).State = EntityState.Modified;
@@ -54,4 +99,5 @@ public class UserRepository(DataContext context, IMapper mapper) : IUserReposito
     {
         await context.SaveChangesAsync();
     }
+
 }
